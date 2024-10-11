@@ -1,0 +1,54 @@
+[params]
+
+title = "Carlos García Márquez"
+author = "C. García Márquez"
+description = "Code Smithing & Server Herding"
+customCss = ["css/custom.css"]
+profilePicture = "images/839653.jpg"
+
+[menu]
+
+  [[menu.main]]
+  name = "Home"
+  identifier = "home"
+  weight = 100
+  url = "/"
+
+  [[menu.main]]
+  name = "Posts"
+  weight = 200
+  identifier = "posts"
+  url = "/posts/"
+
+  [[menu.main]]
+  name = "Portfolio"
+  weight = 300
+  identifier = "portfolio"
+  url = "/portfolio/"
+
+  [[menu.main]]
+  name = "About"
+  weight = 400
+  identifier = "about"
+  url = "/about/"
+
+  [[menu.main]]
+  name = "Contact"
+  weight = 500
+  identifier = "contact"
+  url = "/contact/"
+
+[[params.socialIcons]]
+icon = "fab fa-linkedin"
+title = "LinkedIn"
+url = "https://www.linkedin.com/in/carlosgarciamarquez/"
+
+[[params.socialIcons]]
+icon = "fab fa-github"
+title = "GitHub"
+url = "https://github.com/4kxz"
+
+[[params.socialIcons]]
+icon = "fab fa-youtube"
+title = "YouTube"
+url = "https://www.youtube.com/@Carlos-kv7wi"

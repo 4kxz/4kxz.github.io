@@ -1,0 +1,25 @@
+$accent--lightmode: #d5d3d2;
+$primary--lightmode: #464646;
+$primary-light--lightmode: #9f9f9f;
+$primary-lighter--lightmode: #c1b8b4;
+$shadow--lightmode: 0 8px 16px rgba(10, 10, 10, 0.1);
+
+$accent--darkmode: #232c38;
+$primary--darkmode: #e0e0e0;
+$primary-light--darkmode: #9f9f9f;
+$primary-lighter--darkmode: #425670;
+$shadow--darkmode: 0 8px 16px rgba(226, 226, 226, 0.1);
+
+$warning: #ff742a;
+$info: #ffae00;
+$success: #51d88a;
+$danger: #ff0e3a;
+
+$thumbnail-height: 15em;
+$body-max-width: 1920px;
+
+$sidebar-ratio: calc(1 - #{$content-ratio});
+$content-max-width: calc(#{$body-max-width} * #{$content-ratio});
+$sidebar-max-width: calc(#{$body-max-width} - #{$content-max-width});
+$content-width: calc(#{$content-ratio} * 100%);
+$sidebar-width: calc(#{$sidebar-ratio} * 100%);
