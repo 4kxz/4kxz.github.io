@@ -1,0 +1,1494 @@
+<!doctype html>
+<html
+  dir="ltr"
+  lang="en"
+  data-theme=""
+  
+    class="html theme--light"
+  
+><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8" />
+  <title>
+    C. García Márquez
+        |
+        Conceptes de SQL
+      
+
+    
+
+  </title>
+
+  <meta name="generator" content="Hugo 0.138.0"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="author" content="C. García Márquez" />
+  <meta
+    name="description"
+    content="Software | DevOps | GameDev"
+  />
+  
+  
+    
+    
+    <link
+      rel="stylesheet"
+      href="/scss/main.min.f21454e1027146b079295b354cfd366bcad53389325c2b8a57880c132269cd40.css"
+      integrity="sha256-8hRU4QJxRrB5KVs1TP02a8rVM4kyXCuKV4gMEyJpzUA="
+      crossorigin="anonymous"
+      type="text/css"
+    />
+  
+
+  
+  <link
+    rel="stylesheet"
+    href="/css/markupHighlight.min.73ccfdf28df555e11009c13c20ced067af3cb021504cba43644c705930428b00.css"
+    integrity="sha256-c8z98o31VeEQCcE8IM7QZ688sCFQTLpDZExwWTBCiwA="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+    
+    
+    <link
+      rel="stylesheet"
+      href="/css/custom.min.7f96e2c06834cc0e4894cc90ad33c6625d29126890368b312b757c8f8197025a.css"
+      integrity="sha256-f5biwGg0zA5IlMyQrTPGYl0pEmiQNosxK3V8j4GXAlo="
+      crossorigin="anonymous"
+      media="screen"
+    />
+  
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/fontawesome.min.137b1cf3cea9a8adb7884343a9a5ddddf4280f59153f74dc782fb7f7bf0d0519.css"
+    integrity="sha256-E3sc886pqK23iENDqaXd3fQoD1kVP3TceC&#43;3978NBRk="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/solid.min.e65dc5b48fb5f39b142360c57c3a215744c94e56c755c929cc3e88fe12aab4d3.css"
+    integrity="sha256-5l3FtI&#43;185sUI2DFfDohV0TJTlbHVckpzD6I/hKqtNM="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/regular.min.6f4f16d58da1c82c0c3a3436e021a3d39b4742f741192c546e73e947eacfd92f.css"
+    integrity="sha256-b08W1Y2hyCwMOjQ24CGj05tHQvdBGSxUbnPpR&#43;rP2S8="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/brands.min.e10425ad768bc98ff1fb272a0ac8420f9d1ba22f0612c08ff1010c95080ffe7e.css"
+    integrity="sha256-4QQlrXaLyY/x&#43;ycqCshCD50boi8GEsCP8QEMlQgP/n4="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+
+  <link rel="canonical" href="http://localhost:1313/posts/sql-talk/" />
+
+  
+  
+  
+  
+  <script
+    type="text/javascript"
+    src="/js/anatole-header.min.f9132794301a01ff16550ed66763482bd848f62243d278f5e550229a158bfd32.js"
+    integrity="sha256-&#43;RMnlDAaAf8WVQ7WZ2NIK9hI9iJD0nj15VAimhWL/TI="
+    crossorigin="anonymous"
+  ></script>
+
+  
+    
+    
+    <script
+      type="text/javascript"
+      src="/js/anatole-theme-switcher.min.d6d329d93844b162e8bed1e915619625ca91687952177552b9b3e211014a2957.js"
+      integrity="sha256-1tMp2ThEsWLovtHpFWGWJcqRaHlSF3VSubPiEQFKKVc="
+      crossorigin="anonymous"
+    ></script>
+  
+
+  
+
+  
+
+
+  
+  
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Conceptes de SQL">
+  <meta name="twitter:description" content="Definicions Servidor: la base de dades. Client: el teu programa. Driver: és el software/llibreria que es fa servir per connectar a la base de dades. Normalment cada llenguatge de programació té un driver per cada base de dades. Connexió: és l’estructura de dades que crea el client per gestionar la comunicació amb la base de dades. Normalment li pases adreça, user i pass i fas un connect i et retorna una connexió. A la connexió li passes les queries i al acabar s’ha de fer un close. Cursor: és l’estructura de dades que genera el client per recuperar els resultats d’una query. Transacció: és la unitat de treball amb la base de dades. ORM (Object-Relational Mapper): llibreria que adapta les estructures d’una base de dades relacional per usar-les amb orientació a objectes. Transaccions Les operacions sobre una base de dades SQL es fan sempre dins d’una transacció. Una transacció s’inicia, fa una serie d’operacions de lectura i/o escriptura i es tanca fent un commit. En qualsevol punt es pot fer un rollback, desfent tots els canvis desde l’inici de la transacció.">
+
+
+
+  
+  <meta property="og:url" content="http://localhost:1313/posts/sql-talk/">
+  <meta property="og:site_name" content="Blog">
+  <meta property="og:title" content="Conceptes de SQL">
+  <meta property="og:description" content="Definicions Servidor: la base de dades. Client: el teu programa. Driver: és el software/llibreria que es fa servir per connectar a la base de dades. Normalment cada llenguatge de programació té un driver per cada base de dades. Connexió: és l’estructura de dades que crea el client per gestionar la comunicació amb la base de dades. Normalment li pases adreça, user i pass i fas un connect i et retorna una connexió. A la connexió li passes les queries i al acabar s’ha de fer un close. Cursor: és l’estructura de dades que genera el client per recuperar els resultats d’una query. Transacció: és la unitat de treball amb la base de dades. ORM (Object-Relational Mapper): llibreria que adapta les estructures d’una base de dades relacional per usar-les amb orientació a objectes. Transaccions Les operacions sobre una base de dades SQL es fan sempre dins d’una transacció. Una transacció s’inicia, fa una serie d’operacions de lectura i/o escriptura i es tanca fent un commit. En qualsevol punt es pot fer un rollback, desfent tots els canvis desde l’inici de la transacció.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2021-03-16T13:14:09+02:00">
+    <meta property="article:modified_time" content="2021-03-16T13:14:09+02:00">
+
+
+
+  
+  
+  
+  
+  <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "articleSection": "posts",
+        "name": "Conceptes de SQL",
+        "headline": "Conceptes de SQL",
+        "alternativeHeadline": "",
+        "description": "
+      
+        \u003ch2 id=\u0022definicions\u0022\u003eDefinicions\u003c\/h2\u003e\n\u003cul\u003e\n\u003cli\u003e\u003cstrong\u003eServidor\u003c\/strong\u003e: la base de dades.\u003c\/li\u003e\n\u003cli\u003e\u003cstrong\u003eClient\u003c\/strong\u003e: el teu programa.\u003c\/li\u003e\n\u003cli\u003e\u003cstrong\u003eDriver\u003c\/strong\u003e: és el software\/llibreria que es fa servir per connectar a la base de dades. Normalment cada llenguatge de programació té un driver per cada base de dades.\u003c\/li\u003e\n\u003cli\u003e\u003cstrong\u003eConnexió\u003c\/strong\u003e: és l\u0026rsquo;estructura de dades que crea el client per gestionar la comunicació amb la base de dades. Normalment li pases adreça, user i pass i fas un connect i et retorna una connexió. A la connexió li passes les queries i al acabar s\u0026rsquo;ha de fer un close.\u003c\/li\u003e\n\u003cli\u003e\u003cstrong\u003eCursor\u003c\/strong\u003e: és l\u0026rsquo;estructura de dades que genera el client per recuperar els resultats d\u0026rsquo;una query.\u003c\/li\u003e\n\u003cli\u003e\u003cstrong\u003eTransacció\u003c\/strong\u003e: és la unitat de treball amb la base de dades.\u003c\/li\u003e\n\u003cli\u003e\u003cstrong\u003eORM\u003c\/strong\u003e (Object-Relational Mapper): llibreria que adapta les estructures d\u0026rsquo;una base de dades relacional per usar-les amb orientació a objectes.\u003c\/li\u003e\n\u003c\/ul\u003e\n\u003ch2 id=\u0022transaccions\u0022\u003eTransaccions\u003c\/h2\u003e\n\u003cp\u003eLes operacions sobre una base de dades SQL es fan sempre dins d\u0026rsquo;una \u003cstrong\u003etransacció\u003c\/strong\u003e.\nUna transacció s\u0026rsquo;inicia, fa una serie d\u0026rsquo;operacions de lectura i\/o escriptura i es tanca fent un \u003cstrong\u003ecommit\u003c\/strong\u003e.\nEn qualsevol punt es pot fer un \u003cstrong\u003erollback\u003c\/strong\u003e, desfent tots els canvis desde l\u0026rsquo;inici de la transacció.\u003c\/p\u003e
+
+
+      
+
+
+    ",
+        "inLanguage": "en-us",
+        "isFamilyFriendly": "true",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/localhost:1313\/posts\/sql-talk\/"
+        },
+        "author" : {
+            "@type": "Person",
+            "name": "C. García Márquez"
+        },
+        "creator" : {
+            "@type": "Person",
+            "name": "C. García Márquez"
+        },
+        "accountablePerson" : {
+            "@type": "Person",
+            "name": "C. García Márquez"
+        },
+        "copyrightHolder" : {
+            "@type": "Person",
+            "name": "C. García Márquez"
+        },
+        "copyrightYear" : "2021",
+        "dateCreated": "2021-03-16T13:14:09.00Z",
+        "datePublished": "2021-03-16T13:14:09.00Z",
+        "dateModified": "2021-03-16T13:14:09.00Z",
+        "publisher":{
+            "@type":"Organization",
+            "name": "C. García Márquez",
+            "url": "http://localhost:1313/",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "http:\/\/localhost:1313\/favicon-32x32.png",
+                "width":"32",
+                "height":"32"
+            }
+        },
+        "image": 
+      [
+      ]
+
+    ,
+        "url" : "http:\/\/localhost:1313\/posts\/sql-talk\/",
+        "wordCount" : "2994",
+        "genre" : [ ],
+        "keywords" : [ ]
+    }
+  </script>
+
+
+</head>
+<body class="body">
+    <div class="wrapper">
+      <aside
+        
+          class="wrapper__sidebar"
+        
+      ><div
+  class="sidebar
+    animated fadeInDown
+  "
+>
+  <div class="sidebar__content">
+    <div class="sidebar__introduction">
+      <img
+        class="sidebar__introduction-profileimage"
+        src="/images/839653.jpg"
+        alt="profile picture"
+      />
+      
+        <div class="sidebar__introduction-title">
+          <a href="/">Carlos García Márquez</a>
+        </div>
+      
+      <div class="sidebar__introduction-description">
+        <p>Software | DevOps | GameDev</p>
+      </div>
+    </div>
+    <ul class="sidebar__list">
+      
+        <li class="sidebar__list-item">
+          <a
+            href="https://www.linkedin.com/in/carlosgarciamarquez/"
+            target="_blank"
+            rel="noopener me"
+            aria-label="LinkedIn"
+            title="LinkedIn"
+          >
+            <i class="fab fa-linkedin fa-2x" aria-hidden="true"></i>
+          </a>
+        </li>
+      
+        <li class="sidebar__list-item">
+          <a
+            href="https://github.com/4kxz"
+            target="_blank"
+            rel="noopener me"
+            aria-label="GitHub"
+            title="GitHub"
+          >
+            <i class="fab fa-github fa-2x" aria-hidden="true"></i>
+          </a>
+        </li>
+      
+        <li class="sidebar__list-item">
+          <a
+            href="https://4kxz.itch.io/"
+            target="_blank"
+            rel="noopener me"
+            aria-label="Itch.io"
+            title="Itch.io"
+          >
+            <i class="fab fa-itch-io fa-2x" aria-hidden="true"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div><footer class="footer footer__sidebar">
+  <ul class="footer__list">
+    <li class="footer__item">
+      &copy;
+      
+        C. García Márquez
+        2024
+      
+    </li>
+    
+  </ul>
+</footer>
+  
+  <script
+    type="text/javascript"
+    src="/js/medium-zoom.min.1248fa75275e5ef0cbef27e8c1e27dc507c445ae3a2c7d2ed0be0809555dac64.js"
+    integrity="sha256-Ekj6dSdeXvDL7yfoweJ9xQfERa46LH0u0L4ICVVdrGQ="
+    crossorigin="anonymous"
+  ></script></div>
+</aside>
+      <main
+        
+          class="wrapper__main"
+        
+      >
+        <header class="header"><div
+  class="
+    animated fadeInDown
+  "
+>
+  <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+  </a>
+  <nav class="nav">
+    <ul class="nav__list" id="navMenu">
+      
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/"
+              
+              title=""
+              >Home</a
+            >
+          </li>
+        
+
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/posts/"
+              
+              title=""
+              >Posts</a
+            >
+          </li>
+        
+
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/portfolio/"
+              
+              title=""
+              >Portfolio</a
+            >
+          </li>
+        
+
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/about/"
+              
+              title=""
+              >About</a
+            >
+          </li>
+        
+
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/contact/"
+              
+              title=""
+              >Contact</a
+            >
+          </li>
+        
+
+      
+    </ul>
+    <ul class="nav__list nav__list--end">
+      
+      
+        <li class="nav__list-item">
+          <div class="themeswitch">
+            <a title="Switch Theme">
+              <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a>
+          </div>
+        </li>
+      
+    </ul>
+  </nav>
+</div>
+</header>
+  <div
+    class="post 
+      animated fadeInDown
+    "
+  >
+    
+    <div class="post__content">
+      
+        <h1>Conceptes De SQL</h1>
+      
+      <h2 id="definicions">Definicions</h2>
+<ul>
+<li><strong>Servidor</strong>: la base de dades.</li>
+<li><strong>Client</strong>: el teu programa.</li>
+<li><strong>Driver</strong>: és el software/llibreria que es fa servir per connectar a la base de dades. Normalment cada llenguatge de programació té un driver per cada base de dades.</li>
+<li><strong>Connexió</strong>: és l&rsquo;estructura de dades que crea el client per gestionar la comunicació amb la base de dades. Normalment li pases adreça, user i pass i fas un connect i et retorna una connexió. A la connexió li passes les queries i al acabar s&rsquo;ha de fer un close.</li>
+<li><strong>Cursor</strong>: és l&rsquo;estructura de dades que genera el client per recuperar els resultats d&rsquo;una query.</li>
+<li><strong>Transacció</strong>: és la unitat de treball amb la base de dades.</li>
+<li><strong>ORM</strong> (Object-Relational Mapper): llibreria que adapta les estructures d&rsquo;una base de dades relacional per usar-les amb orientació a objectes.</li>
+</ul>
+<h2 id="transaccions">Transaccions</h2>
+<p>Les operacions sobre una base de dades SQL es fan sempre dins d&rsquo;una <strong>transacció</strong>.
+Una transacció s&rsquo;inicia, fa una serie d&rsquo;operacions de lectura i/o escriptura i es tanca fent un <strong>commit</strong>.
+En qualsevol punt es pot fer un <strong>rollback</strong>, desfent tots els canvis desde l&rsquo;inici de la transacció.</p>
+<p>Moltes bases de dades permeten usar <strong>autocommit</strong>, que fa una transacció per cada query de manera implicita.
+Autocommit és ineficient, pero no cal estar pendent de fer begin/commit/rollback per tot el codi.</p>
+<h3 id="acid">ACID</h3>
+<p>Les transaccions són un mecanisme per garantir les propietats <strong>ACID</strong>:</p>
+<ul>
+<li><strong>Atomicity</strong>: Les operacions d&rsquo;una transacció es tracten en bloc, s&rsquo;apliquen totes o cap.</li>
+<li><strong>Consistency</strong>: Totes les restriccions (tipus de dades, keys, constraints, etc.) s&rsquo;han de complir al fer commit.</li>
+<li><strong>Isolation</strong>: Els canvis d&rsquo;una transaccion no afecten a altres transaccions.</li>
+<li><strong>Durability</strong>: Un cop fet commit les dades perduren, tota transacció posterior veurà les dades actualitzades.</li>
+</ul>
+<p>En sistemes grans amb interaccions complexes aquestes propietats ajuden a evitar inconsistencies, <a href="https://en.wikipedia.org/wiki/Heisenbug">heisenbugs</a> i sorpreses desagradables.
+Garantir-les requereix fer comprovacions i bloquejos que alenteixen les queries.
+Per aprofitar-les al màxim cal que el model de dades estigui ben definit amb les restriccions ben posades.</p>
+<h3 id="concurrencia">Concurrencia</h3>
+<p>Mantenir les propietats ACID és fàcil quan tenim queries seqüencials, però la majoria de bases de dades modernes permeten fer <strong>queries concurrents</strong>. Això entra en conflicte amb la propietat de isolation, donant peu a problemes com els següents:</p>
+<h4 id="dirty-read">Dirty read</h4>
+<p>Una transacció ha llegit un valor que ja no és vàlid perquè s&rsquo;ha fet un rollback.</p>
+<p><img src="http://i.imgur.com/TRWdgIp.jpg" alt="Dirty read"></p>
+<h4 id="non-repeatable-read">Non-repeatable read</h4>
+<p>Una transacció llegeix dos cops i obté resultats diferents perquè una altra transacció el modifica.</p>
+<p><img src="http://i.imgur.com/NRZ0R9g.gif" alt="Non-repeatable read"></p>
+<h4 id="phantom-read">Phantom read</h4>
+<p>Es queden elements sense llegir perquè s&rsquo;han commitejat més tard.</p>
+<p><img src="http://i.imgur.com/nOTkg9s.gif" alt="Phantom read"></p>
+<h3 id="isolation-levels">Isolation levels</h3>
+<p>SQL defineix quatre isolation levels, que permeten triar un compromis entre isolation i eficiència:</p>
+<ul>
+<li><strong>READ UNCOMMITTED</strong>: Va a saco.</li>
+<li><strong>READ COMMITTED</strong>: La transacció espera per llegir a que les escriptures acabin.</li>
+<li><strong>REPEATABLE READ</strong>: Espera com l&rsquo;anterior però un cop llegit ningú pot escriure fins que acabi.</li>
+<li><strong>SERIALIZABLE</strong>: Espera, un cop llegit ningú pot escriure, inserir ni eliminar.</li>
+</ul>
+<p>El nivell es pot indicar al començar la transacció. A Postgres per defecte és READ COMMITTED.</p>
+<p>Taula amb els nivells d&rsquo;isolation i quin és el problema que eviten:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Isolation level</th>
+          <th>Dirty reads</th>
+          <th>Non-repeatable reads</th>
+          <th>Phantoms</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>READ UNCOMMITTED</td>
+          <td>may occur</td>
+          <td>may occur</td>
+          <td>may occur</td>
+      </tr>
+      <tr>
+          <td>READ COMMITTED</td>
+          <td>-</td>
+          <td>may occur</td>
+          <td>may occur</td>
+      </tr>
+      <tr>
+          <td>REPEATABLE READ</td>
+          <td>-</td>
+          <td>-</td>
+          <td>may occur</td>
+      </tr>
+      <tr>
+          <td>SERIALIZABLE</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+      </tr>
+  </tbody>
+</table>
+<p>Evitar els problemes implica fer servir <em>locks</em> per les modificacions i aleshores poden quedar queries aturades fins que la que té el lock faci un commit o rollback.</p>
+<h3 id="nosql">NoSQL</h3>
+<p>Normalment les bases de dades NoSQL passen del ACID i estàn optimitzades per anar més ràpid fent queries.</p>
+<h2 id="dades">Dades</h2>
+<h3 id="estructura">Estructura</h3>
+<h4 id="cluster">Cluster</h4>
+<ul>
+<li>Quan instales PostgreSQL es crea un cluster, cada instància Amazon RDS és un cluster.</li>
+<li>Quan actualitzes a una versió nova, has d&rsquo;actualitzar el cluster.</li>
+<li>Els backups de RDS i restaurar snapshots es fa tot a nivell de cluster.</li>
+</ul>
+<h4 id="database">Database</h4>
+<ul>
+<li>N&rsquo;hi pot haver més d&rsquo;una en un cluster.</li>
+<li>Els usuaris son els mateixos per totes les databases. Però es poden assignar permisos.</li>
+<li>S&rsquo;ha d&rsquo;obrir una connexió per cada base de dades a la que vulguis fer queries.</li>
+<li>Potser hi ha alguna comanda per canviar de db, pero segur que no es poden fer queries a dos dbs diferents alhora.</li>
+<li>Les dades estan separades, no es pot fer join de dues taules si estan en dbs diferents.</li>
+<li>Amb Amazon RDS és una mica redundant, pero va bé fer varies DBs quan només tens un servidor físic.</li>
+</ul>
+<h4 id="schema">Schema</h4>
+<ul>
+<li>Serveix només a nivell organitzatiu, són com namespaces. Pots fer un schema per llum, un per gas, i tenir-ho tot ordenat.</li>
+<li>Equivalent a les databases MySQL.</li>
+<li>Es poden fer joins entre dues taules a schemas diferents.</li>
+<li>Es poden moure taules d&rsquo;un schema a l&rsquo;altra fàcilment.</li>
+<li>Si no s&rsquo;indica un schema explicitament, tot va a parar al schema per defecte que es diu &ldquo;public&rdquo;.</li>
+<li>El schema conté tables, functions, views&hellip;</li>
+</ul>
+<h4 id="taules">Taules</h4>
+<ul>
+<li>Una taula te definides una serie de columnes i cada columna té un tipus.</li>
+</ul>
+<h4 id="permisos">Permisos</h4>
+<ul>
+<li>Els permisos es poden posar a nivell de database, schema o table.</li>
+<li>S&rsquo;assignen a un role, que és com es representa un usuari. Un grup d&rsquo;usuaris també es representa amb un role.</li>
+</ul>
+<h3 id="tipus-de-dades">Tipus de dades</h3>
+<p>És important triar el tipus més adequat per cada columna ja que pot tenir un impacte gran sobre el rendiment. Per exemple, si totes les columnes són de tipus integer i n&rsquo;hi ha prou amb smallint, les queries poden anar casi el doble de ràpid.</p>
+<p>A la documentació oficial expliquen cada tipus, i quins valors representen:</p>
+<ul>
+<li><a href="https://www.postgresql.org/docs/9.5/static/datatype.html">https://www.postgresql.org/docs/9.5/static/datatype.html</a></li>
+</ul>
+<h4 id="integer">Integer</h4>
+<p>Aquest és fàcil: s&rsquo;ha de mirar el rang de valors representables i triar el més adequat:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Tipus</th>
+          <th>Mida</th>
+          <th>Rang de dades</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>smallint</td>
+          <td>2 bytes</td>
+          <td>-32768 to +32767</td>
+      </tr>
+      <tr>
+          <td>integer</td>
+          <td>4 bytes</td>
+          <td>-2147483648 to +2147483647</td>
+      </tr>
+      <tr>
+          <td>bigint</td>
+          <td>8 bytes</td>
+          <td>-9223372036854775808 to +9223372036854775807</td>
+      </tr>
+  </tbody>
+</table>
+<h4 id="float">Float</h4>
+<table>
+  <thead>
+      <tr>
+          <th>Tipus</th>
+          <th>Mida</th>
+          <th>Rang de dades</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Real</td>
+          <td>4 bytes</td>
+          <td>Precisió variable, uns 6 decimals</td>
+      </tr>
+      <tr>
+          <td>Double</td>
+          <td>8 bytes</td>
+          <td>Precisió variable, uns 15 decimals</td>
+      </tr>
+      <tr>
+          <td>Decimal</td>
+          <td>variable</td>
+          <td>Permet triar la precisió</td>
+      </tr>
+  </tbody>
+</table>
+<h4 id="text">Text</h4>
+<p>El tipus TEXT es pot usar tranquilament per tot, té mida variable ilimitada i coses útils com full text search.</p>
+<p>El tipus VARCHAR és un TEXT amb mida màxima.</p>
+<p>El tipus CHAR té mida fixa. És recomanable per gastar espai.</p>
+<h4 id="dates">Dates</h4>
+<p>Hi ha els tipus date, time i timestamp. El timestamp pot ser amb o sense timezone.</p>
+<p><strong>LES DATES SEMPRE S&rsquo;HAN DE GUARDAR EN UTC.</strong></p>
+<p>És una regla sagrada i si algú no ho compleix es mereix que li tallin una mà.</p>
+<p>Si mai trobeu una base de dades on els timestamps no estan en UTC, heu de seguir el procediment següent:</p>
+<ul>
+<li>Pregunteu per la persona responsable d&rsquo;administrar les bases de dades.</li>
+<li>Localitzeu la seva posició a la oficina.</li>
+<li>Sortiu corrents en la direcció oposada, tan ràpid com us sigui físicament possible.</li>
+<li>Passi el que passi, no mireu enrera.</li>
+</ul>
+<h4 id="array">Array</h4>
+<p>Super útil quan un valor és una tupla, com la potència contractada. En lloc de tenir columna_1, columna_2, columna_3 i altres basuritas.</p>
+<p>Ha de tenir un tipus, la mida és opcional:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-SQL" data-lang="SQL"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> little_rubbish (
+</span></span><span style="display:flex;"><span>      keywords TEXT[],
+</span></span><span style="display:flex;"><span>      matrix INTEGER[<span style="color:#ae81ff">3</span>][<span style="color:#ae81ff">3</span>]
+</span></span><span style="display:flex;"><span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> keywords[<span style="color:#ae81ff">1</span>] <span style="color:#66d9ef">FROM</span> little_rubbish;
+</span></span></code></pre></div><p>A més hi ha <a href="https://www.postgresql.org/docs/9.1/static/functions-array.html">funcions de comparacio, length, fill, unnest, etc.</a>.</p>
+<h4 id="json">JSON</h4>
+<p>El 3/4 de la funcionalitat de Mongo es pot implementar amb PostgreSQL usant els camps JSON.
+En quant a eficiència és bastant decent, l&rsquo;únic que no té és map-reduce, inconsistències i fallos de seguretat.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-SQL" data-lang="SQL"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> books ( id integer, <span style="color:#66d9ef">data</span> json );
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">INSERT</span> <span style="color:#66d9ef">INTO</span> books <span style="color:#66d9ef">VALUES</span> (<span style="color:#ae81ff">1</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;{ &#34;name&#34;: &#34;Book the First&#34;, &#34;author&#34;: { &#34;first_name&#34;: &#34;Bob&#34;, &#34;last_name&#34;: &#34;White&#34; } }&#39;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> id, <span style="color:#66d9ef">data</span><span style="color:#f92672">-&gt;&gt;</span><span style="color:#e6db74">&#39;name&#39;</span> <span style="color:#66d9ef">AS</span> name <span style="color:#66d9ef">FROM</span> books;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> books <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">data</span><span style="color:#f92672">-&gt;&gt;</span><span style="color:#e6db74">&#39;name&#39;</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;Book the First&#39;</span>;
+</span></span></code></pre></div><p>A més es poden crear indexos sobre camps del JSON.</p>
+<h3 id="constraints">Constraints</h3>
+<p>Els constraints serveixen per forçar certes condicions que les dades sempre han de complir.
+Quan algun constraint no es compleix al fer commit la base de dades Postgres tira <strong>un error com un piano</strong>.
+Alguns exemples són una clau primaria duplicada o una foreign key que no apunta enlloc.</p>
+<h4 id="not-null">Not Null</h4>
+<p>Impedeix valors nuls en una columna. Afegir NOT NULL és més fàcil que fer tot de comprovacions a l&rsquo;aplicació o menjar-se nulls a tort i dret.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-SQL" data-lang="SQL"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> important_numbers (  
+</span></span><span style="display:flex;"><span>  integer_number INTEGER <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>
+</span></span><span style="display:flex;"><span>);
+</span></span></code></pre></div><h4 id="unique">Unique</h4>
+<p>Evita valors duplicats per columna. Es pot fer compost.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-SQL" data-lang="SQL"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> super_heroes (  
+</span></span><span style="display:flex;"><span>  cool_name TEXT <span style="color:#66d9ef">UNIQUE</span>
+</span></span><span style="display:flex;"><span>);
+</span></span></code></pre></div><h4 id="check">Check</h4>
+<p>Dóna un error si les dades no compleixen la condició indicada (una expressió que evalua a true o false).</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-SQL" data-lang="SQL"><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CHECK</span> (consumption <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>...
+</span></span></code></pre></div><h4 id="primary-key">Primary Key</h4>
+<p>Indica que una columna o conjunt de columnes és un identificador únic de fila.
+La primary key sempre ha de ser UNIQUE i NOT NULL.</p>
+<p>És súper útil tenir una clau primaria per evitar duplicació de dades, inconsistències i reduïr estrès laboral.
+A l&rsquo;hora de fer una taula val la pena pensar bé quina ha de ser la clau primària per tenir-ho tot el més <em>normalitzat</em> possible.</p>
+<h4 id="foreign-keys">Foreign keys</h4>
+<p>Indica que la columna referencia valors d&rsquo;una altra taula:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-SQL" data-lang="SQL"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> teams (
+</span></span><span style="display:flex;"><span>    id INTEGER <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span>,
+</span></span><span style="display:flex;"><span>    cool_name TEXT <span style="color:#66d9ef">UNIQUE</span>
+</span></span><span style="display:flex;"><span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> users (
+</span></span><span style="display:flex;"><span>    id INTEGER <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span>,
+</span></span><span style="display:flex;"><span>    team_id INTEGER <span style="color:#66d9ef">REFERENCES</span> teams (id)
+</span></span><span style="display:flex;"><span>);
+</span></span></code></pre></div><p>Si algú intenta desar un valor de team_id que no existeix a la taula teams li donarà error.</p>
+<p>També es pot configurar què passa amb els foreign key al fer delete per garantir consistencia de les dades:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-SQL" data-lang="SQL"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> users (
+</span></span><span style="display:flex;"><span>    id INTEGER <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span>,
+</span></span><span style="display:flex;"><span>    team_id INTEGER <span style="color:#66d9ef">REFERENCES</span> teams (id) <span style="color:#66d9ef">ON</span> <span style="color:#66d9ef">DELETE</span> <span style="color:#66d9ef">CASCADE</span>
+</span></span><span style="display:flex;"><span>);
+</span></span></code></pre></div><p>En aquest exemple, si elimines un team de la taula teams s&rsquo;esborrarien automàticament els users que el referencien.</p>
+<p>Les opcions són:</p>
+<ul>
+<li><strong>RESTRICT</strong>: Tira error si intentes borrar una fila amb referències. Obligant a borrar les referències primer.</li>
+<li><strong>CASCADE</strong>: Elimina tots els elements que referencien la fila eliminada.</li>
+<li><strong>NO ACTION</strong>: Es deixa la referencia a una fila que no existeix!</li>
+<li><strong>SET NULL/DEFAULT</strong>: Modifica el valor i hi fica un NULL o el valor per defecte.</li>
+</ul>
+<p>Similar a ON DELETE existeix un ON UPDATE.</p>
+<h3 id="normalització">Normalització</h3>
+<p>La normalització és un mètode per evitar duplicació de dades, simplificar queries i dissenyar bases de dades ben estructurades.
+La següent taula d&rsquo;exemple <strong>NO</strong> està normalitzada:</p>
+<table>
+  <thead>
+      <tr>
+          <th>id</th>
+          <th>name</th>
+          <th>department</th>
+          <th>floor</th>
+          <th>supervisor</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>1</td>
+          <td>Donald</td>
+          <td>Yuge Data</td>
+          <td>4</td>
+          <td>Vladimir</td>
+      </tr>
+      <tr>
+          <td>2</td>
+          <td>Alice</td>
+          <td>Sales</td>
+          <td>3</td>
+          <td>Eve</td>
+      </tr>
+      <tr>
+          <td>3</td>
+          <td>Bob</td>
+          <td>Sales</td>
+          <td>3</td>
+          <td>Eve</td>
+      </tr>
+      <tr>
+          <td>4</td>
+          <td>Eve</td>
+          <td>Sales</td>
+          <td>3</td>
+          <td>Vladimir</td>
+      </tr>
+      <tr>
+          <td>5</td>
+          <td>Vladimir</td>
+          <td>Management</td>
+          <td>65</td>
+          <td><em>null</em></td>
+      </tr>
+  </tbody>
+</table>
+<p>Aquesta taula a més de tenir informació repetida té altres problemes:</p>
+<h4 id="insert-anomaly">Insert Anomaly</h4>
+<p>No es pot afegir un nou departament fins que tenim un nou treballador:</p>
+<table>
+  <thead>
+      <tr>
+          <th>id</th>
+          <th>name</th>
+          <th>department</th>
+          <th>floor</th>
+          <th>supervisor</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>1</td>
+          <td>Donald</td>
+          <td>Yuge Data</td>
+          <td>4</td>
+          <td>Vladimir</td>
+      </tr>
+      <tr>
+          <td>2</td>
+          <td>Alice</td>
+          <td>Sales</td>
+          <td>3</td>
+          <td>Eve</td>
+      </tr>
+      <tr>
+          <td>3</td>
+          <td>Bob</td>
+          <td>Sales</td>
+          <td>3</td>
+          <td>Eve</td>
+      </tr>
+      <tr>
+          <td>4</td>
+          <td>Eve</td>
+          <td>Sales</td>
+          <td>3</td>
+          <td>Vladimir</td>
+      </tr>
+      <tr>
+          <td>5</td>
+          <td>Vladimir</td>
+          <td>Management</td>
+          <td>65</td>
+          <td><em>null</em></td>
+      </tr>
+      <tr>
+          <td>-</td>
+          <td>-</td>
+          <td><strong>IT</strong></td>
+          <td><strong>2</strong></td>
+          <td>-</td>
+      </tr>
+  </tbody>
+</table>
+<h4 id="update-anomaly">Update Anomaly</h4>
+<p>Quan es vol actualitzar la informació de departament s&rsquo;han d&rsquo;actualitzar multiples files. Si es fa malament es pot liar parda.</p>
+<table>
+  <thead>
+      <tr>
+          <th>id</th>
+          <th>name</th>
+          <th>department</th>
+          <th>floor</th>
+          <th>supervisor</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>1</td>
+          <td>Donald</td>
+          <td>Yuge Data</td>
+          <td>4</td>
+          <td>Vladimir</td>
+      </tr>
+      <tr>
+          <td>2</td>
+          <td>Alice</td>
+          <td>Sales</td>
+          <td><strong>5</strong></td>
+          <td>Eve</td>
+      </tr>
+      <tr>
+          <td>3</td>
+          <td>Bob</td>
+          <td>Sales</td>
+          <td>3</td>
+          <td>Eve</td>
+      </tr>
+      <tr>
+          <td>4</td>
+          <td>Eve</td>
+          <td>Sales</td>
+          <td>3</td>
+          <td>Vladimir</td>
+      </tr>
+      <tr>
+          <td>5</td>
+          <td>Vladimir</td>
+          <td>Management</td>
+          <td>65</td>
+          <td><em>null</em></td>
+      </tr>
+  </tbody>
+</table>
+<h4 id="deletion-anomaly">Deletion Anomaly</h4>
+<p>Esborrant un usuari podem abolir un departament.</p>
+<table>
+  <thead>
+      <tr>
+          <th>id</th>
+          <th>name</th>
+          <th>department</th>
+          <th>floor</th>
+          <th>supervisor</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><del>1.</del></td>
+          <td><del>Donald</del></td>
+          <td><del>Yuge Data</del></td>
+          <td><del>4.</del></td>
+          <td><del>Vladimir</del></td>
+      </tr>
+      <tr>
+          <td>2</td>
+          <td>Alice</td>
+          <td>Sales</td>
+          <td>3</td>
+          <td>Eve</td>
+      </tr>
+      <tr>
+          <td>3</td>
+          <td>Bob</td>
+          <td>Sales</td>
+          <td>3</td>
+          <td>Eve</td>
+      </tr>
+      <tr>
+          <td>4</td>
+          <td>Eve</td>
+          <td>Sales</td>
+          <td>3</td>
+          <td>Vladimir</td>
+      </tr>
+      <tr>
+          <td>5</td>
+          <td>Vladimir</td>
+          <td>Management</td>
+          <td>65</td>
+          <td><em>null</em></td>
+      </tr>
+  </tbody>
+</table>
+<h4 id="normalitzant">Normalitzant</h4>
+<p>Comparem amb aquesta versió:</p>
+<table>
+  <thead>
+      <tr>
+          <th>id</th>
+          <th>name</th>
+          <th>department</th>
+          <th>supervisor</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>1</td>
+          <td>Donald</td>
+          <td>1</td>
+          <td>5</td>
+      </tr>
+      <tr>
+          <td>2</td>
+          <td>Alice</td>
+          <td>2</td>
+          <td>4</td>
+      </tr>
+      <tr>
+          <td>3</td>
+          <td>Bob</td>
+          <td>2</td>
+          <td>4</td>
+      </tr>
+      <tr>
+          <td>4</td>
+          <td>Eve</td>
+          <td>2</td>
+          <td>5</td>
+      </tr>
+      <tr>
+          <td>5</td>
+          <td>Vladimir</td>
+          <td>3</td>
+          <td><em>null</em></td>
+      </tr>
+  </tbody>
+</table>
+<table>
+  <thead>
+      <tr>
+          <th>id</th>
+          <th>name</th>
+          <th>floor</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>1</td>
+          <td>Yuge Data</td>
+          <td>4</td>
+      </tr>
+      <tr>
+          <td>2</td>
+          <td>Sales</td>
+          <td>3</td>
+      </tr>
+      <tr>
+          <td>3</td>
+          <td>Management</td>
+          <td>65</td>
+      </tr>
+  </tbody>
+</table>
+<p>Hem necessitat separar les dades en dues taules, pero ara estan &ldquo;normalitzades&rdquo; i amb aquesta estructura no hi haurà cap dels probemes que hi havia abans.
+En general, les bases de dades normalitzades porten a taules petites amb queries senzilles, més intuitives i eficients.</p>
+<p>La normalització és un procés formal. Hi ha llibres i <a href="http://databases.about.com/od/specificproducts/a/normalization.htm">tutorials</a> que expliquen com determinar quan una taula no està normalitzada, i quines transformacions cal fer per normalitzar-la.
+És molt recomanable entendre i saber aplicar la normalització, per poder crear taules amb una estructura lògica i eficient de manera intuitiva i metòdica.</p>
+<p>Hi ha diferents nivells de normalització.
+La primera forma normal (1NF) és la més baixa i s&rsquo;han de posar claus primaries, tenir tot en taules bi-dimensionals (files i columnes) i poc més.
+Les segona i tercera treuen duplicats i afegeixen claus foranes.
+A partir de la quarta que us ho expliqui <a href="https://en.wikipedia.org/wiki/Database_normalization#List_of_Normal_Forms">la Wikipedia</a>.</p>
+<p>En casos molt concrets pot ser més eficient tenir una taula no normalitzada per evitar algun join molt lent, però no és l&rsquo;habitual.
+És millor dissenyar taules normalitzades i desnormalitzar quan sigui necessari i sabem perquè ho estem fent.</p>
+<h2 id="queries">Queries</h2>
+<h3 id="tipus-de-join">Tipus de join</h3>
+<p>Explicar com van i perquè els FULL OUTER JOIN els carrega el diable.</p>
+<p>Taula A:</p>
+<table>
+  <thead>
+      <tr>
+          <th>id</th>
+          <th>name</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>1</td>
+          <td>Pirate</td>
+      </tr>
+      <tr>
+          <td>2</td>
+          <td>Monkey</td>
+      </tr>
+      <tr>
+          <td>3</td>
+          <td>Ninja</td>
+      </tr>
+      <tr>
+          <td>4</td>
+          <td>Spaghetti</td>
+      </tr>
+  </tbody>
+</table>
+<p>Taula B:</p>
+<table>
+  <thead>
+      <tr>
+          <th>id</th>
+          <th>name</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>1</td>
+          <td>Rutabaga</td>
+      </tr>
+      <tr>
+          <td>2</td>
+          <td>Pirate</td>
+      </tr>
+      <tr>
+          <td>3</td>
+          <td>Darth Vader</td>
+      </tr>
+      <tr>
+          <td>4</td>
+          <td>Ninja</td>
+      </tr>
+  </tbody>
+</table>
+<h4 id="inner-join">Inner Join</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-SQL" data-lang="SQL"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> TableA
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">INNER</span> <span style="color:#66d9ef">JOIN</span> TableB
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">ON</span> TableA.name <span style="color:#f92672">=</span> TableB.name
+</span></span></code></pre></div><table>
+  <thead>
+      <tr>
+          <th>id</th>
+          <th>name</th>
+          <th>id</th>
+          <th>name</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>1</td>
+          <td>Pirate</td>
+          <td>2</td>
+          <td>Pirate</td>
+      </tr>
+      <tr>
+          <td>3</td>
+          <td>Ninja</td>
+          <td>4</td>
+          <td>Ninja</td>
+      </tr>
+  </tbody>
+</table>
+<p><img src="http://i.imgur.com/q01DA3z.png" alt="Inner Join"></p>
+<h4 id="left-outer-join">Left Outer Join</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-SQL" data-lang="SQL"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> TableA
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">LEFT</span> <span style="color:#66d9ef">OUTER</span> <span style="color:#66d9ef">JOIN</span> TableB
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">ON</span> TableA.name <span style="color:#f92672">=</span> TableB.name
+</span></span></code></pre></div><table>
+  <thead>
+      <tr>
+          <th>id</th>
+          <th>name</th>
+          <th>id</th>
+          <th>name</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>1</td>
+          <td>Pirate</td>
+          <td>2</td>
+          <td>Pirate</td>
+      </tr>
+      <tr>
+          <td>2</td>
+          <td>Monkey</td>
+          <td><em>null</em></td>
+          <td><em>null</em></td>
+      </tr>
+      <tr>
+          <td>3</td>
+          <td>Ninja</td>
+          <td>4</td>
+          <td>Ninja</td>
+      </tr>
+      <tr>
+          <td>4</td>
+          <td>Spaghetti</td>
+          <td><em>null</em></td>
+          <td><em>null</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><img src="http://i.imgur.com/K3asUr0.png" alt="Left Outer Join"></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-SQL" data-lang="SQL"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> TableA
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">LEFT</span> <span style="color:#66d9ef">OUTER</span> <span style="color:#66d9ef">JOIN</span> TableB
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">ON</span> TableA.name <span style="color:#f92672">=</span> TableB.name
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">WHERE</span> TableB.id <span style="color:#66d9ef">IS</span> <span style="color:#66d9ef">null</span>
+</span></span></code></pre></div><table>
+  <thead>
+      <tr>
+          <th>id</th>
+          <th>name</th>
+          <th>id</th>
+          <th>name</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>2</td>
+          <td>Monkey</td>
+          <td><em>null</em></td>
+          <td><em>null</em></td>
+      </tr>
+      <tr>
+          <td>4</td>
+          <td>Spaghetti</td>
+          <td><em>null</em></td>
+          <td><em>null</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><img src="http://i.imgur.com/MKfssy1.png" alt="Left Outer Join 2"></p>
+<h4 id="full-outer-join">Full Outer Join</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-SQL" data-lang="SQL"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> TableA
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">FULL</span> <span style="color:#66d9ef">OUTER</span> <span style="color:#66d9ef">JOIN</span> TableB
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">ON</span> TableA.name <span style="color:#f92672">=</span> TableB.name
+</span></span></code></pre></div><table>
+  <thead>
+      <tr>
+          <th>id</th>
+          <th>name</th>
+          <th>id</th>
+          <th>name</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>1</td>
+          <td>Pirate</td>
+          <td>2</td>
+          <td>Pirate</td>
+      </tr>
+      <tr>
+          <td>2</td>
+          <td>Monkey</td>
+          <td><em>null</em></td>
+          <td><em>null</em></td>
+      </tr>
+      <tr>
+          <td>3</td>
+          <td>Ninja</td>
+          <td>4</td>
+          <td>Ninja</td>
+      </tr>
+      <tr>
+          <td>4</td>
+          <td>Spaghetti</td>
+          <td><em>null</em></td>
+          <td><em>null</em></td>
+      </tr>
+      <tr>
+          <td><em>null</em></td>
+          <td><em>null</em></td>
+          <td>1</td>
+          <td>Rutabaga</td>
+      </tr>
+      <tr>
+          <td><em>null</em></td>
+          <td><em>null</em></td>
+          <td>3</td>
+          <td>Darth Vader</td>
+      </tr>
+  </tbody>
+</table>
+<p><img src="http://i.imgur.com/85tgWpY.png" alt="Full Outer Join"></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-SQL" data-lang="SQL"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> TableA
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">FULL</span> <span style="color:#66d9ef">OUTER</span> <span style="color:#66d9ef">JOIN</span> TableB
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">ON</span> TableA.name <span style="color:#f92672">=</span> TableB.name
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">WHERE</span> TableA.id <span style="color:#66d9ef">IS</span> <span style="color:#66d9ef">null</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">OR</span> TableB.id <span style="color:#66d9ef">IS</span> <span style="color:#66d9ef">null</span>
+</span></span></code></pre></div><table>
+  <thead>
+      <tr>
+          <th>id</th>
+          <th>name</th>
+          <th>id</th>
+          <th>name</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>2</td>
+          <td>Monkey</td>
+          <td><em>null</em></td>
+          <td><em>null</em></td>
+      </tr>
+      <tr>
+          <td>4</td>
+          <td>Spaghetti</td>
+          <td><em>null</em></td>
+          <td><em>null</em></td>
+      </tr>
+      <tr>
+          <td><em>null</em></td>
+          <td><em>null</em></td>
+          <td>1</td>
+          <td>Rutabaga</td>
+      </tr>
+      <tr>
+          <td><em>null</em></td>
+          <td><em>null</em></td>
+          <td>3</td>
+          <td>Darth Vader</td>
+      </tr>
+  </tbody>
+</table>
+<p><img src="http://i.imgur.com/s6deDYN.png" alt="Full Outer Join is null"></p>
+<h4 id="cross-join">Cross Join</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-SQL" data-lang="SQL"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> TableA
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CROSS</span> <span style="color:#66d9ef">JOIN</span> TableB
+</span></span></code></pre></div><table>
+  <thead>
+      <tr>
+          <th>id</th>
+          <th>name</th>
+          <th>id</th>
+          <th>name</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>1</td>
+          <td>Pirate</td>
+          <td>1</td>
+          <td>Rutabaga</td>
+      </tr>
+      <tr>
+          <td>1</td>
+          <td>Pirate</td>
+          <td>2</td>
+          <td>Pirate</td>
+      </tr>
+      <tr>
+          <td>1</td>
+          <td>Pirate</td>
+          <td>3</td>
+          <td>Darth Vader</td>
+      </tr>
+      <tr>
+          <td>1</td>
+          <td>Pirate</td>
+          <td>4</td>
+          <td>Ninja</td>
+      </tr>
+      <tr>
+          <td>2</td>
+          <td>Monkey</td>
+          <td>1</td>
+          <td>Rutabaga</td>
+      </tr>
+      <tr>
+          <td>2</td>
+          <td>Monkey</td>
+          <td>2</td>
+          <td>Pirate</td>
+      </tr>
+      <tr>
+          <td>2</td>
+          <td>Monkey</td>
+          <td>3</td>
+          <td>Darth Vader</td>
+      </tr>
+      <tr>
+          <td>2</td>
+          <td>Monkey</td>
+          <td>4</td>
+          <td>Ninja</td>
+      </tr>
+      <tr>
+          <td>3</td>
+          <td>Ninja</td>
+          <td>1</td>
+          <td>Rutabaga</td>
+      </tr>
+      <tr>
+          <td>3</td>
+          <td>Ninja</td>
+          <td>2</td>
+          <td>Pirate</td>
+      </tr>
+      <tr>
+          <td>3</td>
+          <td>Ninja</td>
+          <td>3</td>
+          <td>Darth Vader</td>
+      </tr>
+      <tr>
+          <td>3</td>
+          <td>Ninja</td>
+          <td>4</td>
+          <td>Ninja</td>
+      </tr>
+      <tr>
+          <td>4</td>
+          <td>Spaghetti</td>
+          <td>1</td>
+          <td>Rutabaga</td>
+      </tr>
+      <tr>
+          <td>4</td>
+          <td>Spaghetti</td>
+          <td>2</td>
+          <td>Pirate</td>
+      </tr>
+      <tr>
+          <td>4</td>
+          <td>Spaghetti</td>
+          <td>3</td>
+          <td>Darth Vader</td>
+      </tr>
+      <tr>
+          <td>4</td>
+          <td>Spaghetti</td>
+          <td>4</td>
+          <td>Ninja</td>
+      </tr>
+  </tbody>
+</table>
+<h4 id="tots-els-joins">Tots els joins</h4>
+<p><img src="http://i.imgur.com/daJ7tX1.png" alt="A drawing showing the joins"></p>
+<h3 id="indexos">Indexos</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-SQL" data-lang="SQL"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">UNIQUE</span> <span style="color:#66d9ef">INDEX</span> cups <span style="color:#66d9ef">ON</span> consumptions(cups, <span style="color:#66d9ef">month</span>);
+</span></span></code></pre></div><ul>
+<li>Els indexos serveixen per trobar ràpidament un subconjunt de les files d&rsquo;una taula.
+<ul>
+<li>Per exemple quan la columna del index surt a la clàusula WHERE o quan es fa un JOIN.</li>
+</ul>
+</li>
+<li>Per crear un index s&rsquo;ha d&rsquo;indicar la columna o columnes sobre les que es vol fer l&rsquo;index.</li>
+<li>En cas de fer un index sobre multiples columnes, l&rsquo;ordre és important.</li>
+</ul>
+<h4 id="b-tree">B-Tree</h4>
+<ul>
+<li>B-Tree és l&rsquo;estructura de dades que fan servir els indexos per defecte.</li>
+<li>Permet fer cerques, insercions i eliminacions en O(log n).</li>
+<li>Internament guarda els nodes ordenats, amb el que les queries que facin servir l&rsquo;index poden fer un ORDER BY eficient.</li>
+</ul>
+<p><a href="https://www.cs.usfca.edu/~galles/visualization/BTree.html">Visualització de com funciona el B-Tree</a></p>
+<h4 id="altres-estructures-de-dades">Altres estructures de dades</h4>
+<ul>
+<li>Hash index</li>
+<li>Generalized Inverted Index (GIN)</li>
+<li>Generalized Search Tree (GiST)</li>
+</ul>
+<h4 id="index-parcial">Index parcial</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-SQL" data-lang="SQL"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">INDEX</span> clients <span style="color:#66d9ef">ON</span> ps(atr) <span style="color:#66d9ef">WHERE</span> ekon_status <span style="color:#66d9ef">IS</span> <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>;
+</span></span></code></pre></div><h4 id="index-sobre-una-expressió">Index sobre una expressió</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-SQL" data-lang="SQL"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">INDEX</span> consumption_year <span style="color:#66d9ef">ON</span> <span style="color:#66d9ef">EXTRACT</span>(<span style="color:#66d9ef">YEAR</span> <span style="color:#66d9ef">FROM</span> datetime);
+</span></span></code></pre></div><h3 id="planificador-de-queries">Planificador de queries</h3>
+<ul>
+<li>SQL és un llenguatge declaratiu, una query descriu quines files s&rsquo;han de retornar i el query planner decideiex <em>com</em> fer la query.</li>
+<li>Postgres calcula estadístiques de les taules, el tipus de dades que es desen, freqüencia, etc.</li>
+<li>El query planner fa servir aquesta informació per decidir si fer servir un index o no, fer una taula temporal&hellip;</li>
+</ul>
+<h3 id="explain">Explain</h3>
+<p>Explain és una comanda que dona informació sobre com es fa una query i és molt útil per optimitzar.
+Totes les bases de dades SQL ho tenen.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-SQL" data-lang="SQL"><span style="display:flex;"><span><span style="color:#66d9ef">EXPLAIN</span> <span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> <span style="color:#66d9ef">user</span>;
+</span></span></code></pre></div><p>Postgres mostra el resultat en text. Hi ha eines que mostren el query plan de manera gràfica.</p>
+<pre tabindex="0"><code>Seq Scan on users  (cost=0.00..5.24 rows=234 width=41)
+</code></pre><ul>
+<li>&lsquo;Seq Scan&rsquo; indica que la query recorre tota la taula.</li>
+<li>Cost son el cost inicial i l&rsquo;estimat total recorrent tota la taula.</li>
+<li>Rows el nombre estimat de files resultants.</li>
+<li>Width la mida esperada de cada fila (en bytes).</li>
+</ul>
+<p>Afegint analyze la query s&rsquo;executa per tenir millor informació.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-SQL" data-lang="SQL"><span style="display:flex;"><span><span style="color:#66d9ef">EXPLAIN</span> <span style="color:#66d9ef">ANALYZE</span> <span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> users;
+</span></span></code></pre></div><p>Query plan:</p>
+<pre tabindex="0"><code>Seq Scan on users (cost=0.00..5.21 rows=173 width=118)
+(actual time=0.018..0.018 rows=0 loops=1)
+Total runtime: 0.020 ms
+</code></pre><p>Ull amb fer EXPLAIN ANALAZY DELETE FROM nomdelataula:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-SQL" data-lang="SQL"><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">EXPLAIN</span> <span style="color:#66d9ef">ANALYZE</span> ...;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">ROLLBACK</span>;
+</span></span></code></pre></div><h4 id="scan">Scan</h4>
+<p>Scan és la forma en que es recorre la taula:</p>
+<ul>
+<li><strong>Sequential Scan</strong>: Es recorre tota la taula fila a fila.</li>
+<li><strong>Index Scan</strong>: Es recorre l&rsquo;index i s&rsquo;agafen de la taula les files rellevants.</li>
+<li><strong>Index Only Scan</strong>: Es recorre l&rsquo;index i no s&rsquo;accedeix a la taula.</li>
+<li><strong>Bitmap Index Scan</strong>: Es recorre l&rsquo;index i es crea un bitmap per accedir a la taula en ordre.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-SQL" data-lang="SQL"><span style="display:flex;"><span><span style="color:#66d9ef">EXPLAIN</span> <span style="color:#66d9ef">ANALYZE</span> <span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> <span style="color:#66d9ef">user</span> <span style="color:#66d9ef">WHERE</span> age <span style="color:#f92672">=</span> <span style="color:#ae81ff">35</span>;
+</span></span></code></pre></div><p>Query plan:</p>
+<pre tabindex="0"><code>Index Scan using iuser_age on user (cost=0.00..8.27 rows=1 width=4)
+Index Cond: (age = 35)
+</code></pre><h4 id="joins">Joins</h4>
+<p>El plan de la query també indica com es fan els joins:</p>
+<ul>
+<li><strong>Nested Loop With Inner Sequential Scan</strong>: Per cada element de la primera taula fa un seq scan de la segona.</li>
+<li><strong>Nested Loop With Inner Index Scan</strong>: Per cada element de la primera taula fa el join amb l&rsquo;index de la dreta.</li>
+<li><strong>Hash Join</strong>: Crea una taula de hash sobre la taula més petita, després recorre la gran mirant si el hash coincideix.</li>
+<li><strong>Merge Join</strong>: Ordena i fa un join (similar al merge sort).</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-SQL" data-lang="SQL"><span style="display:flex;"><span><span style="color:#66d9ef">EXPLAIN</span> <span style="color:#66d9ef">SELECT</span> t2.name <span style="color:#66d9ef">FROM</span> t1 <span style="color:#66d9ef">JOIN</span> t2 <span style="color:#66d9ef">ON</span> (t1.id <span style="color:#f92672">=</span> t2.id) <span style="color:#66d9ef">WHERE</span> t1.id <span style="color:#f92672">=</span> <span style="color:#ae81ff">125</span>;
+</span></span></code></pre></div><p>Query plan:</p>
+<pre tabindex="0"><code>Nested Loop (cost=0.00..178.31 rows=320 width=28)
+    -&gt; Seq Scan on t1 (cost=0.00..152.15 rows=60 width=3)
+        Filter: (id = 125::oid)
+    -&gt; Materialize (cost=0.00..37.02 rows=3 width=34)
+        -&gt; Seq Scan on t2 (cost=0.00..35.08 rows=3 width=34)
+            Filter: (id = 125::oid)
+</code></pre><p>Creant un index la cosa canvia:</p>
+<pre tabindex="0"><code>Nested Loop (cost=0.00..18.65 rows=1 width=278)
+-&gt; Index Scan using it1_id on t1 (cost=0.00..9.32 rows=1 width=4)
+Index Cond: (id = 125::oid)
+-&gt; Index Scan using it2_id on t2 (cost=0.00..9.32 rows=1 width=286)
+Index Cond: (t2.id = 125::oid)
+</code></pre><p><img src="http://i.imgur.com/BreugDx.png" alt="Query Plan Gràfic"></p>
+<h2 id="referències">Referències</h2>
+<p>Transaccions i ACID:</p>
+<ul>
+<li><a href="https://vladmihalcea.com/2014/01/05/a-beginners-guide-to-acid-and-database-transactions/">https://vladmihalcea.com/2014/01/05/a-beginners-guide-to-acid-and-database-transactions/</a></li>
+</ul>
+<p>Normalització:</p>
+<ul>
+<li><a href="https://www.essentialsql.com/get-ready-to-learn-sql-database-normalization-explained-in-simple-english/">https://www.essentialsql.com/get-ready-to-learn-sql-database-normalization-explained-in-simple-english/</a></li>
+</ul>
+<p>Joins:</p>
+<ul>
+<li><a href="https://blog.codinghorror.com/a-visual-explanation-of-sql-joins/">https://blog.codinghorror.com/a-visual-explanation-of-sql-joins/</a></li>
+</ul>
+<p>Indexos:</p>
+<ul>
+<li><a href="https://devcenter.heroku.com/articles/postgresql-indexes">https://devcenter.heroku.com/articles/postgresql-indexes</a></li>
+<li><a href="http://use-the-index-luke.com/">http://use-the-index-luke.com/</a></li>
+</ul>
+<p>Explain:</p>
+<ul>
+<li><a href="http://www.vertabelo.com/blog/technical-articles/understanding-execution-plans-in-postgresql">http://www.vertabelo.com/blog/technical-articles/understanding-execution-plans-in-postgresql</a></li>
+</ul>
+<p>Exercises:</p>
+<ul>
+<li><a href="https://pgexercises.com/">https://pgexercises.com/</a></li>
+</ul>
+</div>
+    <div class="post__footer">
+      
+
+      
+    </div>
+
+    
+  </div>
+
+      </main>
+    </div><footer class="footer footer__base">
+  <ul class="footer__list">
+    <li class="footer__item">
+      &copy;
+      
+        C. García Márquez
+        2024
+      
+    </li>
+    
+  </ul>
+</footer>
+  
+  <script
+    type="text/javascript"
+    src="/js/medium-zoom.min.1248fa75275e5ef0cbef27e8c1e27dc507c445ae3a2c7d2ed0be0809555dac64.js"
+    integrity="sha256-Ekj6dSdeXvDL7yfoweJ9xQfERa46LH0u0L4ICVVdrGQ="
+    crossorigin="anonymous"
+  ></script></body>
+</html>

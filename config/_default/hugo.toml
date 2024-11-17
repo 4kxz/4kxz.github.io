@@ -2,7 +2,7 @@
 
 title = "Carlos García Márquez"
 author = "C. García Márquez"
-description = "Code Smithing & Server Herding"
+description = "Software | DevOps | GameDev"
 customCss = ["css/custom.css"]
 profilePicture = "images/839653.jpg"
 
@@ -49,6 +49,6 @@ title = "GitHub"
 url = "https://github.com/4kxz"
 
 [[params.socialIcons]]
-icon = "fab fa-youtube"
-title = "YouTube"
-url = "https://www.youtube.com/@Carlos-kv7wi"
+icon = "fab fa-itch-io"
+title = "Itch.io"
+url = "https://4kxz.itch.io/"

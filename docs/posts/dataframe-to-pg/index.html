@@ -1,0 +1,483 @@
+<!doctype html>
+<html
+  dir="ltr"
+  lang="en"
+  data-theme=""
+  
+    class="html theme--light"
+  
+><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8" />
+  <title>
+    C. García Márquez
+        |
+        A faster way to save Pandas DataFrames to PostgreSQL
+      
+
+    
+
+  </title>
+
+  <meta name="generator" content="Hugo 0.138.0"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="author" content="C. García Márquez" />
+  <meta
+    name="description"
+    content="Software | DevOps | GameDev"
+  />
+  
+  
+    
+    
+    <link
+      rel="stylesheet"
+      href="/scss/main.min.f21454e1027146b079295b354cfd366bcad53389325c2b8a57880c132269cd40.css"
+      integrity="sha256-8hRU4QJxRrB5KVs1TP02a8rVM4kyXCuKV4gMEyJpzUA="
+      crossorigin="anonymous"
+      type="text/css"
+    />
+  
+
+  
+  <link
+    rel="stylesheet"
+    href="/css/markupHighlight.min.73ccfdf28df555e11009c13c20ced067af3cb021504cba43644c705930428b00.css"
+    integrity="sha256-c8z98o31VeEQCcE8IM7QZ688sCFQTLpDZExwWTBCiwA="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+    
+    
+    <link
+      rel="stylesheet"
+      href="/css/custom.min.7f96e2c06834cc0e4894cc90ad33c6625d29126890368b312b757c8f8197025a.css"
+      integrity="sha256-f5biwGg0zA5IlMyQrTPGYl0pEmiQNosxK3V8j4GXAlo="
+      crossorigin="anonymous"
+      media="screen"
+    />
+  
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/fontawesome.min.137b1cf3cea9a8adb7884343a9a5ddddf4280f59153f74dc782fb7f7bf0d0519.css"
+    integrity="sha256-E3sc886pqK23iENDqaXd3fQoD1kVP3TceC&#43;3978NBRk="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/solid.min.e65dc5b48fb5f39b142360c57c3a215744c94e56c755c929cc3e88fe12aab4d3.css"
+    integrity="sha256-5l3FtI&#43;185sUI2DFfDohV0TJTlbHVckpzD6I/hKqtNM="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/regular.min.6f4f16d58da1c82c0c3a3436e021a3d39b4742f741192c546e73e947eacfd92f.css"
+    integrity="sha256-b08W1Y2hyCwMOjQ24CGj05tHQvdBGSxUbnPpR&#43;rP2S8="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/brands.min.e10425ad768bc98ff1fb272a0ac8420f9d1ba22f0612c08ff1010c95080ffe7e.css"
+    integrity="sha256-4QQlrXaLyY/x&#43;ycqCshCD50boi8GEsCP8QEMlQgP/n4="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+
+  <link rel="canonical" href="http://localhost:1313/posts/dataframe-to-pg/" />
+
+  
+  
+  
+  
+  <script
+    type="text/javascript"
+    src="/js/anatole-header.min.f9132794301a01ff16550ed66763482bd848f62243d278f5e550229a158bfd32.js"
+    integrity="sha256-&#43;RMnlDAaAf8WVQ7WZ2NIK9hI9iJD0nj15VAimhWL/TI="
+    crossorigin="anonymous"
+  ></script>
+
+  
+    
+    
+    <script
+      type="text/javascript"
+      src="/js/anatole-theme-switcher.min.d6d329d93844b162e8bed1e915619625ca91687952177552b9b3e211014a2957.js"
+      integrity="sha256-1tMp2ThEsWLovtHpFWGWJcqRaHlSF3VSubPiEQFKKVc="
+      crossorigin="anonymous"
+    ></script>
+  
+
+  
+
+  
+
+
+  
+  
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="A faster way to save Pandas DataFrames to PostgreSQL">
+  <meta name="twitter:description" content="I found Pandas’ built-in DataFrame.to_sql() too slow for my use case, so here’s a faster way to load a DataFrame to a PostgreSQL database using the COPY command.
+from io import StringIO from pandas import DataFrame from config import postgresql_engine def save_dataframe_to_postgres(dataframe: DataFrame, table_name: str): &#34;&#34;&#34;Saves DataFrame to Postgres, overwriting the existing table.&#34;&#34;&#34; dataframe = dataframe.reset_index() # This turns the index into a normal column # Create empty table (drops it before if it exists) dataframe[0:0].to_sql(table_name, con=postgresql_engine, if_exists=&#39;replace&#39;) # Save the CSV to a string f = StringIO() dataframe.to_csv(f, header=False, index=False) f.seek(0) # This next step uses psycopg&#39;s copy function, won&#39;t work with other engines fmt = &#34;&#34;&#34;COPY &#34;{}&#34; ({}) FROM STDIN WITH (FORMAT CSV, HEADER FALSE)&#34;&#34;&#34; fields = &#39;, &#39;.join(&#39;&#34;{}&#34;&#39;.format(x) for x in dataframe.columns) query = fmt.format(table_name, fields) connection = postgresql_engine.raw_connection() with connection.cursor() as cursor: cursor.copy_expert(query, f) connection.commit() There are some tradeoffs. The DF has to fit in memory and it relies on psycopg copy, it probably won’t work with other connectors or DBs. It might be optimized further by splitting the data in chunks and saving in parallell, but this was good enough for my needs.">
+
+
+
+  
+  <meta property="og:url" content="http://localhost:1313/posts/dataframe-to-pg/">
+  <meta property="og:site_name" content="Blog">
+  <meta property="og:title" content="A faster way to save Pandas DataFrames to PostgreSQL">
+  <meta property="og:description" content="I found Pandas’ built-in DataFrame.to_sql() too slow for my use case, so here’s a faster way to load a DataFrame to a PostgreSQL database using the COPY command.
+from io import StringIO from pandas import DataFrame from config import postgresql_engine def save_dataframe_to_postgres(dataframe: DataFrame, table_name: str): &#34;&#34;&#34;Saves DataFrame to Postgres, overwriting the existing table.&#34;&#34;&#34; dataframe = dataframe.reset_index() # This turns the index into a normal column # Create empty table (drops it before if it exists) dataframe[0:0].to_sql(table_name, con=postgresql_engine, if_exists=&#39;replace&#39;) # Save the CSV to a string f = StringIO() dataframe.to_csv(f, header=False, index=False) f.seek(0) # This next step uses psycopg&#39;s copy function, won&#39;t work with other engines fmt = &#34;&#34;&#34;COPY &#34;{}&#34; ({}) FROM STDIN WITH (FORMAT CSV, HEADER FALSE)&#34;&#34;&#34; fields = &#39;, &#39;.join(&#39;&#34;{}&#34;&#39;.format(x) for x in dataframe.columns) query = fmt.format(table_name, fields) connection = postgresql_engine.raw_connection() with connection.cursor() as cursor: cursor.copy_expert(query, f) connection.commit() There are some tradeoffs. The DF has to fit in memory and it relies on psycopg copy, it probably won’t work with other connectors or DBs. It might be optimized further by splitting the data in chunks and saving in parallell, but this was good enough for my needs.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2021-07-13T15:01:01+02:00">
+    <meta property="article:modified_time" content="2021-07-13T15:01:01+02:00">
+
+
+
+  
+  
+  
+  
+  <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "articleSection": "posts",
+        "name": "A faster way to save Pandas DataFrames to PostgreSQL",
+        "headline": "A faster way to save Pandas DataFrames to PostgreSQL",
+        "alternativeHeadline": "",
+        "description": "
+      
+        \u003cp\u003eI found Pandas\u0026rsquo; built-in \u003ccode\u003eDataFrame.to_sql()\u003c\/code\u003e too slow for my use case, so here\u0026rsquo;s a faster way to load a DataFrame to a PostgreSQL database using the \u003ccode\u003eCOPY\u003c\/code\u003e command.\u003c\/p\u003e\n\u003cdiv class=\u0022highlight\u0022\u003e\u003cpre tabindex=\u00220\u0022 style=\u0022color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;\u0022\u003e\u003ccode class=\u0022language-python\u0022 data-lang=\u0022python\u0022\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\u003cspan style=\u0022color:#f92672\u0022\u003efrom\u003c\/span\u003e io \u003cspan style=\u0022color:#f92672\u0022\u003eimport\u003c\/span\u003e StringIO\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\u003cspan style=\u0022color:#f92672\u0022\u003efrom\u003c\/span\u003e pandas \u003cspan style=\u0022color:#f92672\u0022\u003eimport\u003c\/span\u003e DataFrame\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\u003cspan style=\u0022color:#f92672\u0022\u003efrom\u003c\/span\u003e config \u003cspan style=\u0022color:#f92672\u0022\u003eimport\u003c\/span\u003e postgresql_engine\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\u003cspan style=\u0022color:#66d9ef\u0022\u003edef\u003c\/span\u003e \u003cspan style=\u0022color:#a6e22e\u0022\u003esave_dataframe_to_postgres\u003c\/span\u003e(dataframe: DataFrame, table_name: str):\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e    \u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#34;\u0026#34;\u0026#34;Saves DataFrame to Postgres, overwriting the existing table.\u0026#34;\u0026#34;\u0026#34;\u003c\/span\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e    dataframe \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e dataframe\u003cspan style=\u0022color:#f92672\u0022\u003e.\u003c\/span\u003ereset_index()  \u003cspan style=\u0022color:#75715e\u0022\u003e# This turns the index into a normal column\u003c\/span\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e    \u003cspan style=\u0022color:#75715e\u0022\u003e# Create empty table (drops it before if it exists)\u003c\/span\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e    dataframe[\u003cspan style=\u0022color:#ae81ff\u0022\u003e0\u003c\/span\u003e:\u003cspan style=\u0022color:#ae81ff\u0022\u003e0\u003c\/span\u003e]\u003cspan style=\u0022color:#f92672\u0022\u003e.\u003c\/span\u003eto_sql(table_name, con\u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003epostgresql_engine, if_exists\u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e\u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#39;replace\u0026#39;\u003c\/span\u003e)\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e    \u003cspan style=\u0022color:#75715e\u0022\u003e# Save the CSV to a string\u003c\/span\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e    f \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e StringIO()\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e    dataframe\u003cspan style=\u0022color:#f92672\u0022\u003e.\u003c\/span\u003eto_csv(f, header\u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e\u003cspan style=\u0022color:#66d9ef\u0022\u003eFalse\u003c\/span\u003e, index\u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e\u003cspan style=\u0022color:#66d9ef\u0022\u003eFalse\u003c\/span\u003e)\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e    f\u003cspan style=\u0022color:#f92672\u0022\u003e.\u003c\/span\u003eseek(\u003cspan style=\u0022color:#ae81ff\u0022\u003e0\u003c\/span\u003e)\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e    \u003cspan style=\u0022color:#75715e\u0022\u003e# This next step uses psycopg\u0026#39;s copy function, won\u0026#39;t work with other engines\u003c\/span\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e    fmt \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e \u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#34;\u0026#34;\u0026#34;COPY \u0026#34;\u003c\/span\u003e\u003cspan style=\u0022color:#e6db74\u0022\u003e{}\u003c\/span\u003e\u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#34; (\u003c\/span\u003e\u003cspan style=\u0022color:#e6db74\u0022\u003e{}\u003c\/span\u003e\u003cspan style=\u0022color:#e6db74\u0022\u003e) FROM STDIN WITH (FORMAT CSV, HEADER FALSE)\u0026#34;\u0026#34;\u0026#34;\u003c\/span\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e    fields \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e \u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#39;, \u0026#39;\u003c\/span\u003e\u003cspan style=\u0022color:#f92672\u0022\u003e.\u003c\/span\u003ejoin(\u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#39;\u0026#34;\u003c\/span\u003e\u003cspan style=\u0022color:#e6db74\u0022\u003e{}\u003c\/span\u003e\u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#34;\u0026#39;\u003c\/span\u003e\u003cspan style=\u0022color:#f92672\u0022\u003e.\u003c\/span\u003eformat(x) \u003cspan style=\u0022color:#66d9ef\u0022\u003efor\u003c\/span\u003e x \u003cspan style=\u0022color:#f92672\u0022\u003ein\u003c\/span\u003e dataframe\u003cspan style=\u0022color:#f92672\u0022\u003e.\u003c\/span\u003ecolumns)\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e    query \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e fmt\u003cspan style=\u0022color:#f92672\u0022\u003e.\u003c\/span\u003eformat(table_name, fields)\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e    connection \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e postgresql_engine\u003cspan style=\u0022color:#f92672\u0022\u003e.\u003c\/span\u003eraw_connection()\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e    \u003cspan style=\u0022color:#66d9ef\u0022\u003ewith\u003c\/span\u003e connection\u003cspan style=\u0022color:#f92672\u0022\u003e.\u003c\/span\u003ecursor() \u003cspan style=\u0022color:#66d9ef\u0022\u003eas\u003c\/span\u003e cursor:\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e        cursor\u003cspan style=\u0022color:#f92672\u0022\u003e.\u003c\/span\u003ecopy_expert(query, f)\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e    connection\u003cspan style=\u0022color:#f92672\u0022\u003e.\u003c\/span\u003ecommit()\n\u003c\/span\u003e\u003c\/span\u003e\u003c\/code\u003e\u003c\/pre\u003e\u003c\/div\u003e\u003cp\u003eThere are some tradeoffs. The DF has to fit in memory and it relies on psycopg copy, it probably won\u0026rsquo;t work with other connectors or DBs. It might be optimized further by splitting the data in chunks and saving in parallell, but this was good enough for my needs.\u003c\/p\u003e
+
+
+      
+
+
+    ",
+        "inLanguage": "en-us",
+        "isFamilyFriendly": "true",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/localhost:1313\/posts\/dataframe-to-pg\/"
+        },
+        "author" : {
+            "@type": "Person",
+            "name": "C. García Márquez"
+        },
+        "creator" : {
+            "@type": "Person",
+            "name": "C. García Márquez"
+        },
+        "accountablePerson" : {
+            "@type": "Person",
+            "name": "C. García Márquez"
+        },
+        "copyrightHolder" : {
+            "@type": "Person",
+            "name": "C. García Márquez"
+        },
+        "copyrightYear" : "2021",
+        "dateCreated": "2021-07-13T15:01:01.00Z",
+        "datePublished": "2021-07-13T15:01:01.00Z",
+        "dateModified": "2021-07-13T15:01:01.00Z",
+        "publisher":{
+            "@type":"Organization",
+            "name": "C. García Márquez",
+            "url": "http://localhost:1313/",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "http:\/\/localhost:1313\/favicon-32x32.png",
+                "width":"32",
+                "height":"32"
+            }
+        },
+        "image": 
+      [
+      ]
+
+    ,
+        "url" : "http:\/\/localhost:1313\/posts\/dataframe-to-pg\/",
+        "wordCount" : "188",
+        "genre" : [ ],
+        "keywords" : [ ]
+    }
+  </script>
+
+
+</head>
+<body class="body">
+    <div class="wrapper">
+      <aside
+        
+          class="wrapper__sidebar"
+        
+      ><div
+  class="sidebar
+    animated fadeInDown
+  "
+>
+  <div class="sidebar__content">
+    <div class="sidebar__introduction">
+      <img
+        class="sidebar__introduction-profileimage"
+        src="/images/839653.jpg"
+        alt="profile picture"
+      />
+      
+        <div class="sidebar__introduction-title">
+          <a href="/">Carlos García Márquez</a>
+        </div>
+      
+      <div class="sidebar__introduction-description">
+        <p>Software | DevOps | GameDev</p>
+      </div>
+    </div>
+    <ul class="sidebar__list">
+      
+        <li class="sidebar__list-item">
+          <a
+            href="https://www.linkedin.com/in/carlosgarciamarquez/"
+            target="_blank"
+            rel="noopener me"
+            aria-label="LinkedIn"
+            title="LinkedIn"
+          >
+            <i class="fab fa-linkedin fa-2x" aria-hidden="true"></i>
+          </a>
+        </li>
+      
+        <li class="sidebar__list-item">
+          <a
+            href="https://github.com/4kxz"
+            target="_blank"
+            rel="noopener me"
+            aria-label="GitHub"
+            title="GitHub"
+          >
+            <i class="fab fa-github fa-2x" aria-hidden="true"></i>
+          </a>
+        </li>
+      
+        <li class="sidebar__list-item">
+          <a
+            href="https://4kxz.itch.io/"
+            target="_blank"
+            rel="noopener me"
+            aria-label="Itch.io"
+            title="Itch.io"
+          >
+            <i class="fab fa-itch-io fa-2x" aria-hidden="true"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div><footer class="footer footer__sidebar">
+  <ul class="footer__list">
+    <li class="footer__item">
+      &copy;
+      
+        C. García Márquez
+        2024
+      
+    </li>
+    
+  </ul>
+</footer>
+  
+  <script
+    type="text/javascript"
+    src="/js/medium-zoom.min.1248fa75275e5ef0cbef27e8c1e27dc507c445ae3a2c7d2ed0be0809555dac64.js"
+    integrity="sha256-Ekj6dSdeXvDL7yfoweJ9xQfERa46LH0u0L4ICVVdrGQ="
+    crossorigin="anonymous"
+  ></script></div>
+</aside>
+      <main
+        
+          class="wrapper__main"
+        
+      >
+        <header class="header"><div
+  class="
+    animated fadeInDown
+  "
+>
+  <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+  </a>
+  <nav class="nav">
+    <ul class="nav__list" id="navMenu">
+      
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/"
+              
+              title=""
+              >Home</a
+            >
+          </li>
+        
+
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/posts/"
+              
+              title=""
+              >Posts</a
+            >
+          </li>
+        
+
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/portfolio/"
+              
+              title=""
+              >Portfolio</a
+            >
+          </li>
+        
+
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/about/"
+              
+              title=""
+              >About</a
+            >
+          </li>
+        
+
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/contact/"
+              
+              title=""
+              >Contact</a
+            >
+          </li>
+        
+
+      
+    </ul>
+    <ul class="nav__list nav__list--end">
+      
+      
+        <li class="nav__list-item">
+          <div class="themeswitch">
+            <a title="Switch Theme">
+              <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a>
+          </div>
+        </li>
+      
+    </ul>
+  </nav>
+</div>
+</header>
+  <div
+    class="post 
+      animated fadeInDown
+    "
+  >
+    
+    <div class="post__content">
+      
+        <h1>A Faster Way to Save Pandas DataFrames to PostgreSQL</h1>
+      
+      <p>I found Pandas&rsquo; built-in <code>DataFrame.to_sql()</code> too slow for my use case, so here&rsquo;s a faster way to load a DataFrame to a PostgreSQL database using the <code>COPY</code> command.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> io <span style="color:#f92672">import</span> StringIO
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> pandas <span style="color:#f92672">import</span> DataFrame
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> config <span style="color:#f92672">import</span> postgresql_engine
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">save_dataframe_to_postgres</span>(dataframe: DataFrame, table_name: str):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;Saves DataFrame to Postgres, overwriting the existing table.&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    dataframe <span style="color:#f92672">=</span> dataframe<span style="color:#f92672">.</span>reset_index()  <span style="color:#75715e"># This turns the index into a normal column</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Create empty table (drops it before if it exists)</span>
+</span></span><span style="display:flex;"><span>    dataframe[<span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>to_sql(table_name, con<span style="color:#f92672">=</span>postgresql_engine, if_exists<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;replace&#39;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Save the CSV to a string</span>
+</span></span><span style="display:flex;"><span>    f <span style="color:#f92672">=</span> StringIO()
+</span></span><span style="display:flex;"><span>    dataframe<span style="color:#f92672">.</span>to_csv(f, header<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>, index<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
+</span></span><span style="display:flex;"><span>    f<span style="color:#f92672">.</span>seek(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># This next step uses psycopg&#39;s copy function, won&#39;t work with other engines</span>
+</span></span><span style="display:flex;"><span>    fmt <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;&#34;COPY &#34;</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#34; (</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">) FROM STDIN WITH (FORMAT CSV, HEADER FALSE)&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    fields <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;, &#39;</span><span style="color:#f92672">.</span>join(<span style="color:#e6db74">&#39;&#34;</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#34;&#39;</span><span style="color:#f92672">.</span>format(x) <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> dataframe<span style="color:#f92672">.</span>columns)
+</span></span><span style="display:flex;"><span>    query <span style="color:#f92672">=</span> fmt<span style="color:#f92672">.</span>format(table_name, fields)
+</span></span><span style="display:flex;"><span>    connection <span style="color:#f92672">=</span> postgresql_engine<span style="color:#f92672">.</span>raw_connection()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">with</span> connection<span style="color:#f92672">.</span>cursor() <span style="color:#66d9ef">as</span> cursor:
+</span></span><span style="display:flex;"><span>        cursor<span style="color:#f92672">.</span>copy_expert(query, f)
+</span></span><span style="display:flex;"><span>    connection<span style="color:#f92672">.</span>commit()
+</span></span></code></pre></div><p>There are some tradeoffs. The DF has to fit in memory and it relies on psycopg copy, it probably won&rsquo;t work with other connectors or DBs. It might be optimized further by splitting the data in chunks and saving in parallell, but this was good enough for my needs.</p>
+</div>
+    <div class="post__footer">
+      
+
+      
+    </div>
+
+    
+  </div>
+
+      </main>
+    </div><footer class="footer footer__base">
+  <ul class="footer__list">
+    <li class="footer__item">
+      &copy;
+      
+        C. García Márquez
+        2024
+      
+    </li>
+    
+  </ul>
+</footer>
+  
+  <script
+    type="text/javascript"
+    src="/js/medium-zoom.min.1248fa75275e5ef0cbef27e8c1e27dc507c445ae3a2c7d2ed0be0809555dac64.js"
+    integrity="sha256-Ekj6dSdeXvDL7yfoweJ9xQfERa46LH0u0L4ICVVdrGQ="
+    crossorigin="anonymous"
+  ></script></body>
+</html>
