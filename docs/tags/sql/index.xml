@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>SQL on Blog</title>
+    <link>https://garciamarquez.dev/tags/sql/</link>
+    <description>Recent content in SQL on Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 13 Jul 2022 15:01:01 +0200</lastBuildDate><atom:link href="https://garciamarquez.dev/tags/sql/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>A Fast Way to Save Pandas DataFrames to PostgreSQL</title>
+      <link>https://garciamarquez.dev/posts/dataframe-to-pg/</link>
+      <pubDate>Wed, 13 Jul 2022 15:01:01 +0200</pubDate>
+      
+      <guid>https://garciamarquez.dev/posts/dataframe-to-pg/</guid>
+      
+        <description>&lt;p&gt;I found Pandas&amp;rsquo; built-in &lt;code&gt;DataFrame.to_sql()&lt;/code&gt; too slow for my use case, so here&amp;rsquo;s a faster way to load a DataFrame to a PostgreSQL database using the &lt;code&gt;COPY&lt;/code&gt; command.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; io &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; StringIO
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; pandas &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; DataFrame
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; config &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; postgresql_engine
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;save_dataframe_to_postgres&lt;/span&gt;(dataframe: DataFrame, table_name: str):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&amp;#34;Saves DataFrame to Postgres, overwriting the existing table.&amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    dataframe &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; dataframe&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;reset_index()  &lt;span style=&#34;color:#75715e&#34;&gt;# This turns the index into a normal column&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;# Create empty table (drops it before if it exists)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    dataframe[&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;:&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;]&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;to_sql(table_name, con&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;postgresql_engine, if_exists&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;replace&amp;#39;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;# Save the CSV to a string&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    f &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; StringIO()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    dataframe&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;to_csv(f, header&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;False&lt;/span&gt;, index&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;False&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    f&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;seek(&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;# This next step uses psycopg&amp;#39;s copy function, won&amp;#39;t work with other engines&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    fmt &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&amp;#34;COPY &amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;{}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34; (&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;{}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;) FROM STDIN WITH (FORMAT CSV, HEADER FALSE)&amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    fields &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;, &amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;join(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;{}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;format(x) &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; x &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; dataframe&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;columns)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    query &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; fmt&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;format(table_name, fields)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    connection &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; postgresql_engine&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;raw_connection()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;with&lt;/span&gt; connection&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;cursor() &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; cursor:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        cursor&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;copy_expert(query, f)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    connection&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;commit()
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;There are some tradeoffs. The DF has to fit in memory and it relies on psycopg copy, it won&amp;rsquo;t work with other connectors or DBs. It might be optimized further by splitting the data in chunks and saving in parallell, but this was good enough for my needs.&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>Conceptes de SQL</title>
+      <link>https://garciamarquez.dev/posts/sql-talk/</link>
+      <pubDate>Tue, 16 Mar 2021 13:14:09 +0200</pubDate>
+      
+      <guid>https://garciamarquez.dev/posts/sql-talk/</guid>
+      
+        <description>&lt;h2 id=&#34;definicions&#34;&gt;Definicions&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Servidor&lt;/strong&gt;: la base de dades.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Client&lt;/strong&gt;: el teu programa.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Driver&lt;/strong&gt;: és el software/llibreria que es fa servir per connectar a la base de dades. Normalment cada llenguatge de programació té un driver per cada base de dades.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Connexió&lt;/strong&gt;: és l&amp;rsquo;estructura de dades que crea el client per gestionar la comunicació amb la base de dades. Normalment li pases adreça, user i pass i fas un connect i et retorna una connexió. A la connexió li passes les queries i al acabar s&amp;rsquo;ha de fer un close.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cursor&lt;/strong&gt;: és l&amp;rsquo;estructura de dades que genera el client per recuperar els resultats d&amp;rsquo;una query.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Transacció&lt;/strong&gt;: és la unitat de treball amb la base de dades.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ORM&lt;/strong&gt; (Object-Relational Mapper): llibreria que adapta les estructures d&amp;rsquo;una base de dades relacional per usar-les amb orientació a objectes.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;transaccions&#34;&gt;Transaccions&lt;/h2&gt;
+&lt;p&gt;Les operacions sobre una base de dades SQL es fan sempre dins d&amp;rsquo;una &lt;strong&gt;transacció&lt;/strong&gt;.
+Una transacció s&amp;rsquo;inicia, fa una serie d&amp;rsquo;operacions de lectura i/o escriptura i es tanca fent un &lt;strong&gt;commit&lt;/strong&gt;.
+En qualsevol punt es pot fer un &lt;strong&gt;rollback&lt;/strong&gt;, desfent tots els canvis desde l&amp;rsquo;inici de la transacció.&lt;/p&gt;</description>
+      
+    </item>
+    
+  </channel>
+</rss>

@@ -34,3 +34,7 @@ body {
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1) inset;
     }
 }
+div.post__content pre {
+    padding: 1em;
+    border-radius: 5px;
+}

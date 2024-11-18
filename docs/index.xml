@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Blog</title>
-    <link>http://localhost:1313/</link>
+    <link>https://garciamarquez.dev/</link>
     <description>Recent content on Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 13 Jul 2021 15:01:01 +0200</lastBuildDate><atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 18 Nov 2024 11:50:05 +0200</lastBuildDate><atom:link href="https://garciamarquez.dev/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>A faster way to save Pandas DataFrames to PostgreSQL</title>
-      <link>http://localhost:1313/posts/dataframe-to-pg/</link>
-      <pubDate>Tue, 13 Jul 2021 15:01:01 +0200</pubDate>
+      <title>A Fast Way to Save Pandas DataFrames to PostgreSQL</title>
+      <link>https://garciamarquez.dev/posts/dataframe-to-pg/</link>
+      <pubDate>Wed, 13 Jul 2022 15:01:01 +0200</pubDate>
       
-      <guid>http://localhost:1313/posts/dataframe-to-pg/</guid>
+      <guid>https://garciamarquez.dev/posts/dataframe-to-pg/</guid>
       
         <description>&lt;p&gt;I found Pandas&amp;rsquo; built-in &lt;code&gt;DataFrame.to_sql()&lt;/code&gt; too slow for my use case, so here&amp;rsquo;s a faster way to load a DataFrame to a PostgreSQL database using the &lt;code&gt;COPY&lt;/code&gt; command.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; io &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; StringIO
@@ -39,16 +39,16 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;with&lt;/span&gt; connection&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;cursor() &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; cursor:
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        cursor&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;copy_expert(query, f)
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    connection&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;commit()
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;There are some tradeoffs. The DF has to fit in memory and it relies on psycopg copy, it probably won&amp;rsquo;t work with other connectors or DBs. It might be optimized further by splitting the data in chunks and saving in parallell, but this was good enough for my needs.&lt;/p&gt;</description>
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;There are some tradeoffs. The DF has to fit in memory and it relies on psycopg copy, it won&amp;rsquo;t work with other connectors or DBs. It might be optimized further by splitting the data in chunks and saving in parallell, but this was good enough for my needs.&lt;/p&gt;</description>
       
     </item>
     
     <item>
       <title>Conceptes de SQL</title>
-      <link>http://localhost:1313/posts/sql-talk/</link>
+      <link>https://garciamarquez.dev/posts/sql-talk/</link>
       <pubDate>Tue, 16 Mar 2021 13:14:09 +0200</pubDate>
       
-      <guid>http://localhost:1313/posts/sql-talk/</guid>
+      <guid>https://garciamarquez.dev/posts/sql-talk/</guid>
       
         <description>&lt;h2 id=&#34;definicions&#34;&gt;Definicions&lt;/h2&gt;
 &lt;ul&gt;
@@ -68,24 +68,13 @@ En qualsevol punt es pot fer un &lt;strong&gt;rollback&lt;/strong&gt;, desfent t
     </item>
     
     <item>
-      <title>Contact</title>
-      <link>http://localhost:1313/contact/</link>
-      <pubDate>Fri, 08 Mar 2019 00:00:00 +0000</pubDate>
-      
-      <guid>http://localhost:1313/contact/</guid>
-      
-        <description>Contact Page</description>
-      
-    </item>
-    
-    <item>
       <title>About</title>
-      <link>http://localhost:1313/about/</link>
+      <link>https://garciamarquez.dev/about/</link>
       <pubDate>Thu, 28 Feb 2019 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/about/</guid>
+      <guid>https://garciamarquez.dev/about/</guid>
       
-        <description>Hugo, the world&#39;s fastest framework for building websites</description>
+        <description>About this website and the author</description>
       
     </item>
     

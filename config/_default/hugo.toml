@@ -2,9 +2,16 @@
 
 title = "Carlos García Márquez"
 author = "C. García Márquez"
-description = "Software | DevOps | GameDev"
+description = "Software Engineer & DevOps"
 customCss = ["css/custom.css"]
-profilePicture = "images/839653.jpg"
+profilePicture = "images/profile.jpg"
+disableTitleCapitalization = true
+disableArchiveTitleStyling = true
+fullPostContent = true
+
+singleDateFormat = "2006-01-02"
+indexDateFormat = "2006-01-02"
+listDateFormat = "2006-01-02"
 
 [menu]
 
@@ -31,12 +38,6 @@ profilePicture = "images/839653.jpg"
   weight = 400
   identifier = "about"
   url = "/about/"
-
-  [[menu.main]]
-  name = "Contact"
-  weight = 500
-  identifier = "contact"
-  url = "/contact/"
 
 [[params.socialIcons]]
 icon = "fab fa-linkedin"

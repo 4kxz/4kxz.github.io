@@ -1,25 +1,14 @@
 ---
 title: About
-description: Hugo, the world's fastest framework for building websites
+description: About this website and the author
 date: 2019-02-28
 aliases: ["about-us", "about-hugo", "contact"]
-author: Hugo Authors
+author: Carlos
 ---
+Hi, I'm **Carlos**, a senior software engineer based in Barcelona. With over a decade in software development, I've worked on things you wouldn't believe. High-performance APIs, distributed systems, cloud infrastructure. I focus on Python and modern cloud technologies. I'm interested in API design and architecture, optimization and scaling.
 
-Written in Go, Hugo is an open source static site generator available under the [Apache License 2.0.](https://github.com/gohugoio/hugo/blob/master/LICENSE) Hugo supports TOML, YAML and JSON data file types, Markdown and HTML content files and uses shortcodes to add rich content. Other notable features are taxonomies, multilingual mode, image processing, custom output formats, HTML/CSS/JS minification and support for Sass SCSS workflows.
+I write about programming, databases, Linux, game development – not because I'm particularly fond of writing, but because the process helps me understand topics better and I can reference them later. I've made some of these notes public in case they might help other developers who stumble upon them.
 
-Hugo makes use of a variety of open source projects including:
+When I'm not coding, you can find me experimenting with personal projects or contributing to technical discussions. I work remotely and collaborate with teams across different time zones, bringing a structured yet flexible approach to software development.
 
-- https://github.com/yuin/goldmark
-- https://github.com/alecthomas/chroma
-- https://github.com/muesli/smartcrop
-- https://github.com/spf13/cobra
-- https://github.com/spf13/viper
-
-Hugo is ideal for blogs, corporate websites, creative portfolios, online magazines, single page applications or even a website with thousands of pages.
-
-Hugo is for people who want to hand code their own website without worrying about setting up complicated runtimes, dependencies and databases.
-
-Websites built with Hugo are extremely fast, secure and can be deployed anywhere including, AWS, GitHub Pages, Heroku, Netlify and any other hosting provider.
-
-Learn more and contribute on [GitHub](https://github.com/gohugoio).
+Feel free to reach out through [email](mailto:carlos@garciamarquez.dev), or find me on [LinkedIn](https://www.linkedin.com/in/carlosgarciamarquez/) and [GitHub](https://github.com/4kxz).

@@ -1,0 +1,524 @@
+<!doctype html>
+<html
+  dir="ltr"
+  lang="en"
+  data-theme=""
+  
+    class="html theme--light"
+  
+><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8" />
+  <title>
+    C. García Márquez
+        |
+        Godot Dizzy Shader
+      
+
+    
+
+  </title>
+
+  <meta name="generator" content="Hugo 0.138.0"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="author" content="C. García Márquez" />
+  <meta
+    name="description"
+    content="Software Engineer &amp; DevOps"
+  />
+  
+  
+    
+    
+    <link
+      rel="stylesheet"
+      href="/scss/main.min.937e2235cbe77d279143a662b419d7e2304851d124343af9b7edfbf94b12e0ec.css"
+      integrity="sha256-k34iNcvnfSeRQ6ZitBnX4jBIUdEkNDr5t&#43;37&#43;UsS4Ow="
+      crossorigin="anonymous"
+      type="text/css"
+    />
+  
+
+  
+  <link
+    rel="stylesheet"
+    href="/css/markupHighlight.min.73ccfdf28df555e11009c13c20ced067af3cb021504cba43644c705930428b00.css"
+    integrity="sha256-c8z98o31VeEQCcE8IM7QZ688sCFQTLpDZExwWTBCiwA="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+    
+    
+    <link
+      rel="stylesheet"
+      href="/css/custom.min.dcf286faa6aa2e71985bc32e18b2f3af29b7f9e6cb1a64b58579d480f00640c2.css"
+      integrity="sha256-3PKG&#43;qaqLnGYW8MuGLLzrym3&#43;ebLGmS1hXnUgPAGQMI="
+      crossorigin="anonymous"
+      media="screen"
+    />
+  
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/fontawesome.min.137b1cf3cea9a8adb7884343a9a5ddddf4280f59153f74dc782fb7f7bf0d0519.css"
+    integrity="sha256-E3sc886pqK23iENDqaXd3fQoD1kVP3TceC&#43;3978NBRk="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/solid.min.e65dc5b48fb5f39b142360c57c3a215744c94e56c755c929cc3e88fe12aab4d3.css"
+    integrity="sha256-5l3FtI&#43;185sUI2DFfDohV0TJTlbHVckpzD6I/hKqtNM="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/regular.min.6f4f16d58da1c82c0c3a3436e021a3d39b4742f741192c546e73e947eacfd92f.css"
+    integrity="sha256-b08W1Y2hyCwMOjQ24CGj05tHQvdBGSxUbnPpR&#43;rP2S8="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/brands.min.e10425ad768bc98ff1fb272a0ac8420f9d1ba22f0612c08ff1010c95080ffe7e.css"
+    integrity="sha256-4QQlrXaLyY/x&#43;ycqCshCD50boi8GEsCP8QEMlQgP/n4="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+
+  <link rel="canonical" href="http://localhost:1313/posts/dizzy-shader/" />
+
+  
+  
+  
+  
+  <script
+    type="text/javascript"
+    src="/js/anatole-header.min.f9132794301a01ff16550ed66763482bd848f62243d278f5e550229a158bfd32.js"
+    integrity="sha256-&#43;RMnlDAaAf8WVQ7WZ2NIK9hI9iJD0nj15VAimhWL/TI="
+    crossorigin="anonymous"
+  ></script>
+
+  
+    
+    
+    <script
+      type="text/javascript"
+      src="/js/anatole-theme-switcher.min.d6d329d93844b162e8bed1e915619625ca91687952177552b9b3e211014a2957.js"
+      integrity="sha256-1tMp2ThEsWLovtHpFWGWJcqRaHlSF3VSubPiEQFKKVc="
+      crossorigin="anonymous"
+    ></script>
+  
+
+  
+
+  
+
+
+  
+  
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Godot Dizzy Shader">
+  <meta name="twitter:description" content="Shader to make a stunned/dazzled/drunkish effect in 2D.
+Based on one of the awesome shaders in the Godot Retro shaders pack (License CC0).
+shader_type canvas_item; uniform float strength: hint_range(0, 5) = 1.5; uniform sampler2D SCREEN_TEXTURE: hint_screen_texture, filter_linear_mipmap; void fragment() { vec2 uv = FRAGCOORD.xy / (1.0 / SCREEN_PIXEL_SIZE).xy; float xOffset = snoise(vec2(TIME * 0.13, uv.y * 2.0)) * 0.003 * strength; float yOffset = snoise(vec2(TIME * 0.37, uv.x * 4.0)) * 0.008 * strength; vec3 color = texture(SCREEN_TEXTURE, vec2(uv.x &#43; xOffset, uv.y &#43; yOffset)).rgb; COLOR = vec4(color, 1.0); } vec3 mod289vec3(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; } vec2 mod289vec2(vec2 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; } vec3 permute(vec3 x) { return mod289vec3(((x * 34.0) &#43; 1.0) * x); } float snoise(vec2 v) { const vec4 C = vec4( 0.211324865405187, // (3.0-sqrt(3.0)) / 6.0 0.366025403784439, // 0.5 * (sqrt(3.0) - 1.0) -0.577350269189626, // -1.0 &#43; 2.0 * C.x 0.024390243902439, // 1.0 / 41.0 ); // First corner vec2 i = floor(v &#43; dot(v, C.yy)); vec2 x0 = v - i &#43; dot(i, C.xx); // Other corners vec2 i1; i1 = (x0.x &gt; x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0); vec4 x12 = x0.xyxy &#43; C.xxzz; x12.xy -= i1; // Permutations i = mod289vec2(i);	// Avoid truncation effects in permutation vec3 p = permute(permute(i.y &#43; vec3(0.0, i1.y, 1.0)) &#43; i.x &#43; vec3(0.0, i1.x, 1.0)); vec3 m = max(0.5 - vec3(dot(x0, x0), dot(x12.xy, x12.xy), dot(x12.zw, x12.zw)), 0.0); m = m * m; m = m * m; // Gradients: 41 points uniformly over a line, mapped onto a diamond. // The ring size 17*17 = 289 is close to a multiple of 41 (41*7 = 287) vec3 x = 2.0 * fract(p * C.www) - 1.0; vec3 h = abs(x) - 0.5; vec3 ox = floor(x &#43; 0.5); vec3 a0 = x - ox; // Normalise gradients implicitly by scaling m // Approximation of: m *= inversesqrt(a0*a0 &#43; h*h); m *= 1.79284291400159 - 0.85373472095314 * (a0 * a0 &#43; h * h); // Compute final noise value at P vec3 g; g.x = a0.x * x0.x &#43; h.x * x0.y; g.yz = a0.yz * x12.xz &#43; h.yz * x12.yw; return 130.0 * dot(m, g); }">
+
+
+
+  
+  <meta property="og:url" content="http://localhost:1313/posts/dizzy-shader/">
+  <meta property="og:site_name" content="Blog">
+  <meta property="og:title" content="Godot Dizzy Shader">
+  <meta property="og:description" content="Shader to make a stunned/dazzled/drunkish effect in 2D.
+Based on one of the awesome shaders in the Godot Retro shaders pack (License CC0).
+shader_type canvas_item; uniform float strength: hint_range(0, 5) = 1.5; uniform sampler2D SCREEN_TEXTURE: hint_screen_texture, filter_linear_mipmap; void fragment() { vec2 uv = FRAGCOORD.xy / (1.0 / SCREEN_PIXEL_SIZE).xy; float xOffset = snoise(vec2(TIME * 0.13, uv.y * 2.0)) * 0.003 * strength; float yOffset = snoise(vec2(TIME * 0.37, uv.x * 4.0)) * 0.008 * strength; vec3 color = texture(SCREEN_TEXTURE, vec2(uv.x &#43; xOffset, uv.y &#43; yOffset)).rgb; COLOR = vec4(color, 1.0); } vec3 mod289vec3(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; } vec2 mod289vec2(vec2 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; } vec3 permute(vec3 x) { return mod289vec3(((x * 34.0) &#43; 1.0) * x); } float snoise(vec2 v) { const vec4 C = vec4( 0.211324865405187, // (3.0-sqrt(3.0)) / 6.0 0.366025403784439, // 0.5 * (sqrt(3.0) - 1.0) -0.577350269189626, // -1.0 &#43; 2.0 * C.x 0.024390243902439, // 1.0 / 41.0 ); // First corner vec2 i = floor(v &#43; dot(v, C.yy)); vec2 x0 = v - i &#43; dot(i, C.xx); // Other corners vec2 i1; i1 = (x0.x &gt; x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0); vec4 x12 = x0.xyxy &#43; C.xxzz; x12.xy -= i1; // Permutations i = mod289vec2(i);	// Avoid truncation effects in permutation vec3 p = permute(permute(i.y &#43; vec3(0.0, i1.y, 1.0)) &#43; i.x &#43; vec3(0.0, i1.x, 1.0)); vec3 m = max(0.5 - vec3(dot(x0, x0), dot(x12.xy, x12.xy), dot(x12.zw, x12.zw)), 0.0); m = m * m; m = m * m; // Gradients: 41 points uniformly over a line, mapped onto a diamond. // The ring size 17*17 = 289 is close to a multiple of 41 (41*7 = 287) vec3 x = 2.0 * fract(p * C.www) - 1.0; vec3 h = abs(x) - 0.5; vec3 ox = floor(x &#43; 0.5); vec3 a0 = x - ox; // Normalise gradients implicitly by scaling m // Approximation of: m *= inversesqrt(a0*a0 &#43; h*h); m *= 1.79284291400159 - 0.85373472095314 * (a0 * a0 &#43; h * h); // Compute final noise value at P vec3 g; g.x = a0.x * x0.x &#43; h.x * x0.y; g.yz = a0.yz * x12.xz &#43; h.yz * x12.yw; return 130.0 * dot(m, g); }">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-08-23T17:28:05+02:00">
+    <meta property="article:modified_time" content="2024-08-23T17:28:05+02:00">
+    <meta property="article:tag" content="GLSL">
+    <meta property="article:tag" content="Godot">
+
+
+
+  
+  
+  
+  
+  <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "articleSection": "posts",
+        "name": "Godot Dizzy Shader",
+        "headline": "Godot Dizzy Shader",
+        "alternativeHeadline": "",
+        "description": "
+      
+        \u003cp\u003eShader to make a stunned\/dazzled\/drunkish effect in 2D.\u003c\/p\u003e\n\u003cp\u003eBased on one of the awesome shaders in the \u003ca href=\u0022https:\/\/github.com\/ahopness\/GodotRetro\u0022\u003eGodot Retro shaders pack\u003c\/a\u003e (License CC0).\u003c\/p\u003e\n\u003cdiv class=\u0022highlight\u0022\u003e\u003cpre tabindex=\u00220\u0022 style=\u0022color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;\u0022\u003e\u003ccode class=\u0022language-glsl\u0022 data-lang=\u0022glsl\u0022\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003eshader_type canvas_item;\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\u003cspan style=\u0022color:#66d9ef\u0022\u003euniform\u003c\/span\u003e \u003cspan style=\u0022color:#66d9ef\u0022\u003efloat\u003c\/span\u003e strength\u003cspan style=\u0022color:#f92672\u0022\u003e:\u003c\/span\u003e hint_range(\u003cspan style=\u0022color:#ae81ff\u0022\u003e0\u003c\/span\u003e, \u003cspan style=\u0022color:#ae81ff\u0022\u003e5\u003c\/span\u003e) \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e \u003cspan style=\u0022color:#ae81ff\u0022\u003e1.5\u003c\/span\u003e;\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\u003cspan style=\u0022color:#66d9ef\u0022\u003euniform\u003c\/span\u003e \u003cspan style=\u0022color:#66d9ef\u0022\u003esampler2D\u003c\/span\u003e SCREEN_TEXTURE\u003cspan style=\u0022color:#f92672\u0022\u003e:\u003c\/span\u003e hint_screen_texture, filter_linear_mipmap;\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\u003cspan style=\u0022color:#66d9ef\u0022\u003evoid\u003c\/span\u003e fragment() {\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\t\u003cspan style=\u0022color:#66d9ef\u0022\u003evec2\u003c\/span\u003e uv \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e FRAGCOORD.xy \u003cspan style=\u0022color:#f92672\u0022\u003e\/\u003c\/span\u003e (\u003cspan style=\u0022color:#ae81ff\u0022\u003e1.0\u003c\/span\u003e \u003cspan style=\u0022color:#f92672\u0022\u003e\/\u003c\/span\u003e SCREEN_PIXEL_SIZE).xy;\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\t\u003cspan style=\u0022color:#66d9ef\u0022\u003efloat\u003c\/span\u003e xOffset \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e snoise(\u003cspan style=\u0022color:#66d9ef\u0022\u003evec2\u003c\/span\u003e(TIME \u003cspan style=\u0022color:#f92672\u0022\u003e*\u003c\/span\u003e \u003cspan style=\u0022color:#ae81ff\u0022\u003e0.13\u003c\/span\u003e, uv.y \u003cspan style=\u0022color:#f92672\u0022\u003e*\u003c\/span\u003e \u003cspan style=\u0022color:#ae81ff\u0022\u003e2.0\u003c\/span\u003e)) \u003cspan style=\u0022color:#f92672\u0022\u003e*\u003c\/span\u003e \u003cspan style=\u0022color:#ae81ff\u0022\u003e0.003\u003c\/span\u003e \u003cspan style=\u0022color:#f92672\u0022\u003e*\u003c\/span\u003e strength;\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\t\u003cspan style=\u0022color:#66d9ef\u0022\u003efloat\u003c\/span\u003e yOffset \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e snoise(\u003cspan style=\u0022color:#66d9ef\u0022\u003evec2\u003c\/span\u003e(TIME \u003cspan style=\u0022color:#f92672\u0022\u003e*\u003c\/span\u003e \u003cspan style=\u0022color:#ae81ff\u0022\u003e0.37\u003c\/span\u003e, uv.x \u003cspan style=\u0022color:#f92672\u0022\u003e*\u003c\/span\u003e \u003cspan style=\u0022color:#ae81ff\u0022\u003e4.0\u003c\/span\u003e)) \u003cspan style=\u0022color:#f92672\u0022\u003e*\u003c\/span\u003e \u003cspan style=\u0022color:#ae81ff\u0022\u003e0.008\u003c\/span\u003e \u003cspan style=\u0022color:#f92672\u0022\u003e*\u003c\/span\u003e strength;\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\t\u003cspan style=\u0022color:#66d9ef\u0022\u003evec3\u003c\/span\u003e color \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e texture(SCREEN_TEXTURE, \u003cspan style=\u0022color:#66d9ef\u0022\u003evec2\u003c\/span\u003e(uv.x \u003cspan style=\u0022color:#f92672\u0022\u003e\u002b\u003c\/span\u003e xOffset, uv.y \u003cspan style=\u0022color:#f92672\u0022\u003e\u002b\u003c\/span\u003e yOffset)).rgb;\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\tCOLOR \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e \u003cspan style=\u0022color:#66d9ef\u0022\u003evec4\u003c\/span\u003e(color, \u003cspan style=\u0022color:#ae81ff\u0022\u003e1.0\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e}\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\u003cspan style=\u0022color:#66d9ef\u0022\u003evec3\u003c\/span\u003e mod289vec3(\u003cspan style=\u0022color:#66d9ef\u0022\u003evec3\u003c\/span\u003e x) {\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\t\u003cspan style=\u0022color:#66d9ef\u0022\u003ereturn\u003c\/span\u003e x \u003cspan style=\u0022color:#f92672\u0022\u003e-\u003c\/span\u003e floor(x \u003cspan style=\u0022color:#f92672\u0022\u003e*\u003c\/span\u003e (\u003cspan style=\u0022color:#ae81ff\u0022\u003e1.0\u003c\/span\u003e \u003cspan style=\u0022color:#f92672\u0022\u003e\/\u003c\/span\u003e \u003cspan style=\u0022color:#ae81ff\u0022\u003e289.0\u003c\/span\u003e)) \u003cspan style=\u0022color:#f92672\u0022\u003e*\u003c\/span\u003e \u003cspan style=\u0022color:#ae81ff\u0022\u003e289.0\u003c\/span\u003e;\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e}\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\u003cspan style=\u0022color:#66d9ef\u0022\u003evec2\u003c\/span\u003e mod289vec2(\u003cspan style=\u0022color:#66d9ef\u0022\u003evec2\u003c\/span\u003e x) {\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\t\u003cspan style=\u0022color:#66d9ef\u0022\u003ereturn\u003c\/span\u003e x \u003cspan style=\u0022color:#f92672\u0022\u003e-\u003c\/span\u003e floor(x \u003cspan style=\u0022color:#f92672\u0022\u003e*\u003c\/span\u003e (\u003cspan style=\u0022color:#ae81ff\u0022\u003e1.0\u003c\/span\u003e \u003cspan style=\u0022color:#f92672\u0022\u003e\/\u003c\/span\u003e \u003cspan style=\u0022color:#ae81ff\u0022\u003e289.0\u003c\/span\u003e)) \u003cspan style=\u0022color:#f92672\u0022\u003e*\u003c\/span\u003e \u003cspan style=\u0022color:#ae81ff\u0022\u003e289.0\u003c\/span\u003e;\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e}\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\u003cspan style=\u0022color:#66d9ef\u0022\u003evec3\u003c\/span\u003e permute(\u003cspan style=\u0022color:#66d9ef\u0022\u003evec3\u003c\/span\u003e x) {\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\t\u003cspan style=\u0022color:#66d9ef\u0022\u003ereturn\u003c\/span\u003e mod289vec3(((x \u003cspan style=\u0022color:#f92672\u0022\u003e*\u003c\/span\u003e \u003cspan style=\u0022color:#ae81ff\u0022\u003e34.0\u003c\/span\u003e) \u003cspan style=\u0022color:#f92672\u0022\u003e\u002b\u003c\/span\u003e \u003cspan style=\u0022color:#ae81ff\u0022\u003e1.0\u003c\/span\u003e) \u003cspan style=\u0022color:#f92672\u0022\u003e*\u003c\/span\u003e x);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e}\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\u003cspan style=\u0022color:#66d9ef\u0022\u003efloat\u003c\/span\u003e snoise(\u003cspan style=\u0022color:#66d9ef\u0022\u003evec2\u003c\/span\u003e v) {\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\t\u003cspan style=\u0022color:#66d9ef\u0022\u003econst\u003c\/span\u003e \u003cspan style=\u0022color:#66d9ef\u0022\u003evec4\u003c\/span\u003e C \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e \u003cspan style=\u0022color:#66d9ef\u0022\u003evec4\u003c\/span\u003e(\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\t\t\u003cspan style=\u0022color:#ae81ff\u0022\u003e0.211324865405187\u003c\/span\u003e, \u003cspan style=\u0022color:#75715e\u0022\u003e\/\/ (3.0-sqrt(3.0)) \/ 6.0\u003c\/span\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\t\t\u003cspan style=\u0022color:#ae81ff\u0022\u003e0.366025403784439\u003c\/span\u003e, \u003cspan style=\u0022color:#75715e\u0022\u003e\/\/ 0.5 * (sqrt(3.0) - 1.0)\u003c\/span\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\t\t\u003cspan style=\u0022color:#f92672\u0022\u003e-\u003c\/span\u003e\u003cspan style=\u0022color:#ae81ff\u0022\u003e0.577350269189626\u003c\/span\u003e, \u003cspan style=\u0022color:#75715e\u0022\u003e\/\/ -1.0 \u002b 2.0 * C.x\u003c\/span\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\t\t\u003cspan style=\u0022color:#ae81ff\u0022\u003e0.024390243902439\u003c\/span\u003e, \u003cspan style=\u0022color:#75715e\u0022\u003e\/\/ 1.0 \/ 41.0\u003c\/span\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e    );\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\t\u003cspan style=\u0022color:#75715e\u0022\u003e\/\/ First corner\u003c\/span\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\t\u003cspan style=\u0022color:#66d9ef\u0022\u003evec2\u003c\/span\u003e i \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e floor(v \u003cspan style=\u0022color:#f92672\u0022\u003e\u002b\u003c\/span\u003e dot(v, C.yy));\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\t\u003cspan style=\u0022color:#66d9ef\u0022\u003evec2\u003c\/span\u003e x0 \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e v \u003cspan style=\u0022color:#f92672\u0022\u003e-\u003c\/span\u003e i \u003cspan style=\u0022color:#f92672\u0022\u003e\u002b\u003c\/span\u003e dot(i, C.xx);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\t\u003cspan style=\u0022color:#75715e\u0022\u003e\/\/ Other corners\u003c\/span\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\t\u003cspan style=\u0022color:#66d9ef\u0022\u003evec2\u003c\/span\u003e i1;\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\ti1 \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e (x0.x \u003cspan style=\u0022color:#f92672\u0022\u003e\u0026gt;\u003c\/span\u003e x0.y) \u003cspan style=\u0022color:#f92672\u0022\u003e?\u003c\/span\u003e \u003cspan style=\u0022color:#66d9ef\u0022\u003evec2\u003c\/span\u003e(\u003cspan style=\u0022color:#ae81ff\u0022\u003e1.0\u003c\/span\u003e, \u003cspan style=\u0022color:#ae81ff\u0022\u003e0.0\u003c\/span\u003e) \u003cspan style=\u0022color:#f92672\u0022\u003e:\u003c\/span\u003e \u003cspan style=\u0022color:#66d9ef\u0022\u003evec2\u003c\/span\u003e(\u003cspan style=\u0022color:#ae81ff\u0022\u003e0.0\u003c\/span\u003e, \u003cspan style=\u0022color:#ae81ff\u0022\u003e1.0\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\t\u003cspan style=\u0022color:#66d9ef\u0022\u003evec4\u003c\/span\u003e x12 \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e x0.xyxy \u003cspan style=\u0022color:#f92672\u0022\u003e\u002b\u003c\/span\u003e C.xxzz;\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\tx12.xy \u003cspan style=\u0022color:#f92672\u0022\u003e-=\u003c\/span\u003e i1;\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\t\u003cspan style=\u0022color:#75715e\u0022\u003e\/\/ Permutations\u003c\/span\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\ti \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e mod289vec2(i);\t\u003cspan style=\u0022color:#75715e\u0022\u003e\/\/ Avoid truncation effects in permutation\u003c\/span\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\t\u003cspan style=\u0022color:#66d9ef\u0022\u003evec3\u003c\/span\u003e p \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e permute(permute(i.y \u003cspan style=\u0022color:#f92672\u0022\u003e\u002b\u003c\/span\u003e \u003cspan style=\u0022color:#66d9ef\u0022\u003evec3\u003c\/span\u003e(\u003cspan style=\u0022color:#ae81ff\u0022\u003e0.0\u003c\/span\u003e, i1.y, \u003cspan style=\u0022color:#ae81ff\u0022\u003e1.0\u003c\/span\u003e)) \u003cspan style=\u0022color:#f92672\u0022\u003e\u002b\u003c\/span\u003e i.x \u003cspan style=\u0022color:#f92672\u0022\u003e\u002b\u003c\/span\u003e \u003cspan style=\u0022color:#66d9ef\u0022\u003evec3\u003c\/span\u003e(\u003cspan style=\u0022color:#ae81ff\u0022\u003e0.0\u003c\/span\u003e, i1.x, \u003cspan style=\u0022color:#ae81ff\u0022\u003e1.0\u003c\/span\u003e));\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\t\u003cspan style=\u0022color:#66d9ef\u0022\u003evec3\u003c\/span\u003e m \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e max(\u003cspan style=\u0022color:#ae81ff\u0022\u003e0.5\u003c\/span\u003e \u003cspan style=\u0022color:#f92672\u0022\u003e-\u003c\/span\u003e \u003cspan style=\u0022color:#66d9ef\u0022\u003evec3\u003c\/span\u003e(dot(x0, x0), dot(x12.xy, x12.xy), dot(x12.zw, x12.zw)), \u003cspan style=\u0022color:#ae81ff\u0022\u003e0.0\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\tm \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e m \u003cspan style=\u0022color:#f92672\u0022\u003e*\u003c\/span\u003e m;\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\tm \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e m \u003cspan style=\u0022color:#f92672\u0022\u003e*\u003c\/span\u003e m;\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\t\u003cspan style=\u0022color:#75715e\u0022\u003e\/\/ Gradients: 41 points uniformly over a line, mapped onto a diamond.\u003c\/span\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\t\u003cspan style=\u0022color:#75715e\u0022\u003e\/\/ The ring size 17*17 = 289 is close to a multiple of 41 (41*7 = 287)\u003c\/span\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\t\u003cspan style=\u0022color:#66d9ef\u0022\u003evec3\u003c\/span\u003e x \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e \u003cspan style=\u0022color:#ae81ff\u0022\u003e2.0\u003c\/span\u003e \u003cspan style=\u0022color:#f92672\u0022\u003e*\u003c\/span\u003e fract(p \u003cspan style=\u0022color:#f92672\u0022\u003e*\u003c\/span\u003e C.www) \u003cspan style=\u0022color:#f92672\u0022\u003e-\u003c\/span\u003e \u003cspan style=\u0022color:#ae81ff\u0022\u003e1.0\u003c\/span\u003e;\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\t\u003cspan style=\u0022color:#66d9ef\u0022\u003evec3\u003c\/span\u003e h \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e abs(x) \u003cspan style=\u0022color:#f92672\u0022\u003e-\u003c\/span\u003e \u003cspan style=\u0022color:#ae81ff\u0022\u003e0.5\u003c\/span\u003e;\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\t\u003cspan style=\u0022color:#66d9ef\u0022\u003evec3\u003c\/span\u003e ox \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e floor(x \u003cspan style=\u0022color:#f92672\u0022\u003e\u002b\u003c\/span\u003e \u003cspan style=\u0022color:#ae81ff\u0022\u003e0.5\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\t\u003cspan style=\u0022color:#66d9ef\u0022\u003evec3\u003c\/span\u003e a0 \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e x \u003cspan style=\u0022color:#f92672\u0022\u003e-\u003c\/span\u003e ox;\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\t\u003cspan style=\u0022color:#75715e\u0022\u003e\/\/ Normalise gradients implicitly by scaling m\u003c\/span\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\t\u003cspan style=\u0022color:#75715e\u0022\u003e\/\/ Approximation of: m *= inversesqrt(a0*a0 \u002b h*h);\u003c\/span\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\tm \u003cspan style=\u0022color:#f92672\u0022\u003e*=\u003c\/span\u003e \u003cspan style=\u0022color:#ae81ff\u0022\u003e1.79284291400159\u003c\/span\u003e \u003cspan style=\u0022color:#f92672\u0022\u003e-\u003c\/span\u003e \u003cspan style=\u0022color:#ae81ff\u0022\u003e0.85373472095314\u003c\/span\u003e \u003cspan style=\u0022color:#f92672\u0022\u003e*\u003c\/span\u003e (a0 \u003cspan style=\u0022color:#f92672\u0022\u003e*\u003c\/span\u003e a0 \u003cspan style=\u0022color:#f92672\u0022\u003e\u002b\u003c\/span\u003e h \u003cspan style=\u0022color:#f92672\u0022\u003e*\u003c\/span\u003e h);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\t\u003cspan style=\u0022color:#75715e\u0022\u003e\/\/ Compute final noise value at P\u003c\/span\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\t\u003cspan style=\u0022color:#66d9ef\u0022\u003evec3\u003c\/span\u003e g;\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\tg.x \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e a0.x \u003cspan style=\u0022color:#f92672\u0022\u003e*\u003c\/span\u003e x0.x \u003cspan style=\u0022color:#f92672\u0022\u003e\u002b\u003c\/span\u003e h.x \u003cspan style=\u0022color:#f92672\u0022\u003e*\u003c\/span\u003e x0.y;\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\tg.yz \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e a0.yz \u003cspan style=\u0022color:#f92672\u0022\u003e*\u003c\/span\u003e x12.xz \u003cspan style=\u0022color:#f92672\u0022\u003e\u002b\u003c\/span\u003e h.yz \u003cspan style=\u0022color:#f92672\u0022\u003e*\u003c\/span\u003e x12.yw;\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\t\u003cspan style=\u0022color:#66d9ef\u0022\u003ereturn\u003c\/span\u003e \u003cspan style=\u0022color:#ae81ff\u0022\u003e130.0\u003c\/span\u003e \u003cspan style=\u0022color:#f92672\u0022\u003e*\u003c\/span\u003e dot(m, g);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e}\n\u003c\/span\u003e\u003c\/span\u003e\u003c\/code\u003e\u003c\/pre\u003e\u003c\/div\u003e
+
+
+      
+
+
+    ",
+        "inLanguage": "en-us",
+        "isFamilyFriendly": "true",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/localhost:1313\/posts\/dizzy-shader\/"
+        },
+        "author" : {
+            "@type": "Person",
+            "name": "C. García Márquez"
+        },
+        "creator" : {
+            "@type": "Person",
+            "name": "C. García Márquez"
+        },
+        "accountablePerson" : {
+            "@type": "Person",
+            "name": "C. García Márquez"
+        },
+        "copyrightHolder" : {
+            "@type": "Person",
+            "name": "C. García Márquez"
+        },
+        "copyrightYear" : "2024",
+        "dateCreated": "2024-08-23T17:28:05.00Z",
+        "datePublished": "2024-08-23T17:28:05.00Z",
+        "dateModified": "2024-08-23T17:28:05.00Z",
+        "publisher":{
+            "@type":"Organization",
+            "name": "C. García Márquez",
+            "url": "http://localhost:1313/",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "http:\/\/localhost:1313\/favicon-32x32.png",
+                "width":"32",
+                "height":"32"
+            }
+        },
+        "image": 
+      [
+      ]
+
+    ,
+        "url" : "http:\/\/localhost:1313\/posts\/dizzy-shader\/",
+        "wordCount" : "375",
+        "genre" : [ ],
+        "keywords" : [ 
+      
+      "GLSL"
+
+    
+      
+        ,
+
+      
+      "Godot"
+
+    ]
+    }
+  </script>
+
+
+</head>
+<body class="body">
+    <div class="wrapper">
+      <aside
+        
+          class="wrapper__sidebar"
+        
+      ><div
+  class="sidebar
+    animated fadeInDown
+  "
+>
+  <div class="sidebar__content">
+    <div class="sidebar__introduction">
+      <img
+        class="sidebar__introduction-profileimage"
+        src="/images/profile.jpg"
+        alt="profile picture"
+      />
+      
+        <div class="sidebar__introduction-title">
+          <a href="/">Carlos García Márquez</a>
+        </div>
+      
+      <div class="sidebar__introduction-description">
+        <p>Software Engineer & DevOps</p>
+      </div>
+    </div>
+    <ul class="sidebar__list">
+      
+        <li class="sidebar__list-item">
+          <a
+            href="https://www.linkedin.com/in/carlosgarciamarquez/"
+            target="_blank"
+            rel="noopener me"
+            aria-label="LinkedIn"
+            title="LinkedIn"
+          >
+            <i class="fab fa-linkedin fa-2x" aria-hidden="true"></i>
+          </a>
+        </li>
+      
+        <li class="sidebar__list-item">
+          <a
+            href="https://github.com/4kxz"
+            target="_blank"
+            rel="noopener me"
+            aria-label="GitHub"
+            title="GitHub"
+          >
+            <i class="fab fa-github fa-2x" aria-hidden="true"></i>
+          </a>
+        </li>
+      
+        <li class="sidebar__list-item">
+          <a
+            href="https://4kxz.itch.io/"
+            target="_blank"
+            rel="noopener me"
+            aria-label="Itch.io"
+            title="Itch.io"
+          >
+            <i class="fab fa-itch-io fa-2x" aria-hidden="true"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div><footer class="footer footer__sidebar">
+  <ul class="footer__list">
+    <li class="footer__item">
+      &copy;
+      
+        C. García Márquez
+        2024
+      
+    </li>
+    
+  </ul>
+</footer>
+  
+  <script
+    type="text/javascript"
+    src="/js/medium-zoom.min.1248fa75275e5ef0cbef27e8c1e27dc507c445ae3a2c7d2ed0be0809555dac64.js"
+    integrity="sha256-Ekj6dSdeXvDL7yfoweJ9xQfERa46LH0u0L4ICVVdrGQ="
+    crossorigin="anonymous"
+  ></script></div>
+</aside>
+      <main
+        
+          class="wrapper__main"
+        
+      >
+        <header class="header"><div
+  class="
+    animated fadeInDown
+  "
+>
+  <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+  </a>
+  <nav class="nav">
+    <ul class="nav__list" id="navMenu">
+      
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/"
+              
+              title=""
+              >Home</a
+            >
+          </li>
+        
+
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/posts/"
+              
+              title=""
+              >Posts</a
+            >
+          </li>
+        
+
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/portfolio/"
+              
+              title=""
+              >Portfolio</a
+            >
+          </li>
+        
+
+      
+        
+        
+          <li class="nav__list-item">
+            
+            <a
+              
+              href="/about/"
+              
+              title=""
+              >About</a
+            >
+          </li>
+        
+
+      
+    </ul>
+    <ul class="nav__list nav__list--end">
+      
+      
+        <li class="nav__list-item">
+          <div class="themeswitch">
+            <a title="Switch Theme">
+              <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a>
+          </div>
+        </li>
+      
+    </ul>
+  </nav>
+</div>
+</header>
+  <div
+    class="post 
+      animated fadeInDown
+    "
+  >
+    
+    <div class="post__content">
+      
+        <h1>Godot Dizzy Shader</h1>
+      
+      <p>Shader to make a stunned/dazzled/drunkish effect in 2D.</p>
+<p>Based on one of the awesome shaders in the <a href="https://github.com/ahopness/GodotRetro">Godot Retro shaders pack</a> (License CC0).</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-glsl" data-lang="glsl"><span style="display:flex;"><span>shader_type canvas_item;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">uniform</span> <span style="color:#66d9ef">float</span> strength<span style="color:#f92672">:</span> hint_range(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">5</span>) <span style="color:#f92672">=</span> <span style="color:#ae81ff">1.5</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">uniform</span> <span style="color:#66d9ef">sampler2D</span> SCREEN_TEXTURE<span style="color:#f92672">:</span> hint_screen_texture, filter_linear_mipmap;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> fragment() {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">vec2</span> uv <span style="color:#f92672">=</span> FRAGCOORD.xy <span style="color:#f92672">/</span> (<span style="color:#ae81ff">1.0</span> <span style="color:#f92672">/</span> SCREEN_PIXEL_SIZE).xy;
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">float</span> xOffset <span style="color:#f92672">=</span> snoise(<span style="color:#66d9ef">vec2</span>(TIME <span style="color:#f92672">*</span> <span style="color:#ae81ff">0.13</span>, uv.y <span style="color:#f92672">*</span> <span style="color:#ae81ff">2.0</span>)) <span style="color:#f92672">*</span> <span style="color:#ae81ff">0.003</span> <span style="color:#f92672">*</span> strength;
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">float</span> yOffset <span style="color:#f92672">=</span> snoise(<span style="color:#66d9ef">vec2</span>(TIME <span style="color:#f92672">*</span> <span style="color:#ae81ff">0.37</span>, uv.x <span style="color:#f92672">*</span> <span style="color:#ae81ff">4.0</span>)) <span style="color:#f92672">*</span> <span style="color:#ae81ff">0.008</span> <span style="color:#f92672">*</span> strength;
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">vec3</span> color <span style="color:#f92672">=</span> texture(SCREEN_TEXTURE, <span style="color:#66d9ef">vec2</span>(uv.x <span style="color:#f92672">+</span> xOffset, uv.y <span style="color:#f92672">+</span> yOffset)).rgb;
+</span></span><span style="display:flex;"><span>	COLOR <span style="color:#f92672">=</span> <span style="color:#66d9ef">vec4</span>(color, <span style="color:#ae81ff">1.0</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">vec3</span> mod289vec3(<span style="color:#66d9ef">vec3</span> x) {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> x <span style="color:#f92672">-</span> floor(x <span style="color:#f92672">*</span> (<span style="color:#ae81ff">1.0</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">289.0</span>)) <span style="color:#f92672">*</span> <span style="color:#ae81ff">289.0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">vec2</span> mod289vec2(<span style="color:#66d9ef">vec2</span> x) {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> x <span style="color:#f92672">-</span> floor(x <span style="color:#f92672">*</span> (<span style="color:#ae81ff">1.0</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">289.0</span>)) <span style="color:#f92672">*</span> <span style="color:#ae81ff">289.0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">vec3</span> permute(<span style="color:#66d9ef">vec3</span> x) {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> mod289vec3(((x <span style="color:#f92672">*</span> <span style="color:#ae81ff">34.0</span>) <span style="color:#f92672">+</span> <span style="color:#ae81ff">1.0</span>) <span style="color:#f92672">*</span> x);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">float</span> snoise(<span style="color:#66d9ef">vec2</span> v) {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">vec4</span> C <span style="color:#f92672">=</span> <span style="color:#66d9ef">vec4</span>(
+</span></span><span style="display:flex;"><span>		<span style="color:#ae81ff">0.211324865405187</span>, <span style="color:#75715e">// (3.0-sqrt(3.0)) / 6.0</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#ae81ff">0.366025403784439</span>, <span style="color:#75715e">// 0.5 * (sqrt(3.0) - 1.0)</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#f92672">-</span><span style="color:#ae81ff">0.577350269189626</span>, <span style="color:#75715e">// -1.0 + 2.0 * C.x</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#ae81ff">0.024390243902439</span>, <span style="color:#75715e">// 1.0 / 41.0</span>
+</span></span><span style="display:flex;"><span>    );
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// First corner</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">vec2</span> i <span style="color:#f92672">=</span> floor(v <span style="color:#f92672">+</span> dot(v, C.yy));
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">vec2</span> x0 <span style="color:#f92672">=</span> v <span style="color:#f92672">-</span> i <span style="color:#f92672">+</span> dot(i, C.xx);
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// Other corners</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">vec2</span> i1;
+</span></span><span style="display:flex;"><span>	i1 <span style="color:#f92672">=</span> (x0.x <span style="color:#f92672">&gt;</span> x0.y) <span style="color:#f92672">?</span> <span style="color:#66d9ef">vec2</span>(<span style="color:#ae81ff">1.0</span>, <span style="color:#ae81ff">0.0</span>) <span style="color:#f92672">:</span> <span style="color:#66d9ef">vec2</span>(<span style="color:#ae81ff">0.0</span>, <span style="color:#ae81ff">1.0</span>);
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">vec4</span> x12 <span style="color:#f92672">=</span> x0.xyxy <span style="color:#f92672">+</span> C.xxzz;
+</span></span><span style="display:flex;"><span>	x12.xy <span style="color:#f92672">-=</span> i1;
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// Permutations</span>
+</span></span><span style="display:flex;"><span>	i <span style="color:#f92672">=</span> mod289vec2(i);	<span style="color:#75715e">// Avoid truncation effects in permutation</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">vec3</span> p <span style="color:#f92672">=</span> permute(permute(i.y <span style="color:#f92672">+</span> <span style="color:#66d9ef">vec3</span>(<span style="color:#ae81ff">0.0</span>, i1.y, <span style="color:#ae81ff">1.0</span>)) <span style="color:#f92672">+</span> i.x <span style="color:#f92672">+</span> <span style="color:#66d9ef">vec3</span>(<span style="color:#ae81ff">0.0</span>, i1.x, <span style="color:#ae81ff">1.0</span>));
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">vec3</span> m <span style="color:#f92672">=</span> max(<span style="color:#ae81ff">0.5</span> <span style="color:#f92672">-</span> <span style="color:#66d9ef">vec3</span>(dot(x0, x0), dot(x12.xy, x12.xy), dot(x12.zw, x12.zw)), <span style="color:#ae81ff">0.0</span>);
+</span></span><span style="display:flex;"><span>	m <span style="color:#f92672">=</span> m <span style="color:#f92672">*</span> m;
+</span></span><span style="display:flex;"><span>	m <span style="color:#f92672">=</span> m <span style="color:#f92672">*</span> m;
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// Gradients: 41 points uniformly over a line, mapped onto a diamond.</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// The ring size 17*17 = 289 is close to a multiple of 41 (41*7 = 287)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">vec3</span> x <span style="color:#f92672">=</span> <span style="color:#ae81ff">2.0</span> <span style="color:#f92672">*</span> fract(p <span style="color:#f92672">*</span> C.www) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1.0</span>;
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">vec3</span> h <span style="color:#f92672">=</span> abs(x) <span style="color:#f92672">-</span> <span style="color:#ae81ff">0.5</span>;
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">vec3</span> ox <span style="color:#f92672">=</span> floor(x <span style="color:#f92672">+</span> <span style="color:#ae81ff">0.5</span>);
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">vec3</span> a0 <span style="color:#f92672">=</span> x <span style="color:#f92672">-</span> ox;
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// Normalise gradients implicitly by scaling m</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// Approximation of: m *= inversesqrt(a0*a0 + h*h);</span>
+</span></span><span style="display:flex;"><span>	m <span style="color:#f92672">*=</span> <span style="color:#ae81ff">1.79284291400159</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">0.85373472095314</span> <span style="color:#f92672">*</span> (a0 <span style="color:#f92672">*</span> a0 <span style="color:#f92672">+</span> h <span style="color:#f92672">*</span> h);
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// Compute final noise value at P</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">vec3</span> g;
+</span></span><span style="display:flex;"><span>	g.x <span style="color:#f92672">=</span> a0.x <span style="color:#f92672">*</span> x0.x <span style="color:#f92672">+</span> h.x <span style="color:#f92672">*</span> x0.y;
+</span></span><span style="display:flex;"><span>	g.yz <span style="color:#f92672">=</span> a0.yz <span style="color:#f92672">*</span> x12.xz <span style="color:#f92672">+</span> h.yz <span style="color:#f92672">*</span> x12.yw;
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">130.0</span> <span style="color:#f92672">*</span> dot(m, g);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></div>
+    <div class="post__footer">
+      
+
+      
+        <span><a class="tag" href="/tags/glsl/">GLSL</a><a class="tag" href="/tags/godot/">Godot</a></span>
+
+
+      
+    </div>
+
+    
+  </div>
+
+      </main>
+    </div><footer class="footer footer__base">
+  <ul class="footer__list">
+    <li class="footer__item">
+      &copy;
+      
+        C. García Márquez
+        2024
+      
+    </li>
+    
+  </ul>
+</footer>
+  
+  <script
+    type="text/javascript"
+    src="/js/medium-zoom.min.1248fa75275e5ef0cbef27e8c1e27dc507c445ae3a2c7d2ed0be0809555dac64.js"
+    integrity="sha256-Ekj6dSdeXvDL7yfoweJ9xQfERa46LH0u0L4ICVVdrGQ="
+    crossorigin="anonymous"
+  ></script></body>
+</html>

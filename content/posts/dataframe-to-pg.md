@@ -1,7 +1,8 @@
 +++
-title = 'A faster way to save Pandas DataFrames to PostgreSQL'
-date = 2021-07-13T15:01:01+02:00
+title = 'A Fast Way to Save Pandas DataFrames to PostgreSQL'
+date = 2022-07-13T15:01:01+02:00
 draft = false
+tags = ["Python", "SQL"]
 +++
 I found Pandas' built-in `DataFrame.to_sql()` too slow for my use case, so here's a faster way to load a DataFrame to a PostgreSQL database using the `COPY` command. 
 
@@ -33,4 +34,4 @@ def save_dataframe_to_postgres(dataframe: DataFrame, table_name: str):
     connection.commit()
 ```
 
-There are some tradeoffs. The DF has to fit in memory and it relies on psycopg copy, it probably won't work with other connectors or DBs. It might be optimized further by splitting the data in chunks and saving in parallell, but this was good enough for my needs.
+There are some tradeoffs. The DF has to fit in memory and it relies on psycopg copy, it won't work with other connectors or DBs. It might be optimized further by splitting the data in chunks and saving in parallell, but this was good enough for my needs.

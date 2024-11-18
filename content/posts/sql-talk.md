@@ -2,6 +2,7 @@
 title = 'Conceptes de SQL'
 date = 2021-03-16T13:14:09+02:00
 draft = false
+tags = ["SQL"]
 +++
 
 ## Definicions
