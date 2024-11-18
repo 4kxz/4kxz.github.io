@@ -11,7 +11,7 @@
   <title>
     C. García Márquez
         |
-        Conceptes de SQL
+        Conceptes de SQL (Catalan)
       
 
     
@@ -30,8 +30,8 @@
     
     <link
       rel="stylesheet"
-      href="/scss/main.min.937e2235cbe77d279143a662b419d7e2304851d124343af9b7edfbf94b12e0ec.css"
-      integrity="sha256-k34iNcvnfSeRQ6ZitBnX4jBIUdEkNDr5t&#43;37&#43;UsS4Ow="
+      href="/scss/main.min.63dd808797fed6b2e29bbf64538bbb726a5935bb0468fec16b30f3916fc954a5.css"
+      integrity="sha256-Y92Ah5f&#43;1rLim79kU4u7cmpZNbsEaP7BazDzkW/JVKU="
       crossorigin="anonymous"
       type="text/css"
     />
@@ -126,16 +126,16 @@
   
   
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Conceptes de SQL">
-  <meta name="twitter:description" content="Definicions Servidor: la base de dades. Client: el teu programa. Driver: és el software/llibreria que es fa servir per connectar a la base de dades. Normalment cada llenguatge de programació té un driver per cada base de dades. Connexió: és l’estructura de dades que crea el client per gestionar la comunicació amb la base de dades. Normalment li pases adreça, user i pass i fas un connect i et retorna una connexió. A la connexió li passes les queries i al acabar s’ha de fer un close. Cursor: és l’estructura de dades que genera el client per recuperar els resultats d’una query. Transacció: és la unitat de treball amb la base de dades. ORM (Object-Relational Mapper): llibreria que adapta les estructures d’una base de dades relacional per usar-les amb orientació a objectes. Transaccions Les operacions sobre una base de dades SQL es fan sempre dins d’una transacció. Una transacció s’inicia, fa una serie d’operacions de lectura i/o escriptura i es tanca fent un commit. En qualsevol punt es pot fer un rollback, desfent tots els canvis desde l’inici de la transacció.">
+  <meta name="twitter:title" content="Conceptes de SQL (Catalan)">
+  <meta name="twitter:description" content="Introducció a alguns conceptes de bases de dades relacionals, de cara a aprendre a fer queries més eficients.">
 
 
 
   
   <meta property="og:url" content="https://garciamarquez.dev/posts/sql-talk/">
   <meta property="og:site_name" content="Blog">
-  <meta property="og:title" content="Conceptes de SQL">
-  <meta property="og:description" content="Definicions Servidor: la base de dades. Client: el teu programa. Driver: és el software/llibreria que es fa servir per connectar a la base de dades. Normalment cada llenguatge de programació té un driver per cada base de dades. Connexió: és l’estructura de dades que crea el client per gestionar la comunicació amb la base de dades. Normalment li pases adreça, user i pass i fas un connect i et retorna una connexió. A la connexió li passes les queries i al acabar s’ha de fer un close. Cursor: és l’estructura de dades que genera el client per recuperar els resultats d’una query. Transacció: és la unitat de treball amb la base de dades. ORM (Object-Relational Mapper): llibreria que adapta les estructures d’una base de dades relacional per usar-les amb orientació a objectes. Transaccions Les operacions sobre una base de dades SQL es fan sempre dins d’una transacció. Una transacció s’inicia, fa una serie d’operacions de lectura i/o escriptura i es tanca fent un commit. En qualsevol punt es pot fer un rollback, desfent tots els canvis desde l’inici de la transacció.">
+  <meta property="og:title" content="Conceptes de SQL (Catalan)">
+  <meta property="og:description" content="Introducció a alguns conceptes de bases de dades relacionals, de cara a aprendre a fer queries més eficients.">
   <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
@@ -154,12 +154,12 @@
         "@context": "http://schema.org",
         "@type": "BlogPosting",
         "articleSection": "posts",
-        "name": "Conceptes de SQL",
-        "headline": "Conceptes de SQL",
+        "name": "Conceptes de SQL (Catalan)",
+        "headline": "Conceptes de SQL (Catalan)",
         "alternativeHeadline": "",
         "description": "
       
-        \u003ch2 id=\u0022definicions\u0022\u003eDefinicions\u003c\/h2\u003e\n\u003cul\u003e\n\u003cli\u003e\u003cstrong\u003eServidor\u003c\/strong\u003e: la base de dades.\u003c\/li\u003e\n\u003cli\u003e\u003cstrong\u003eClient\u003c\/strong\u003e: el teu programa.\u003c\/li\u003e\n\u003cli\u003e\u003cstrong\u003eDriver\u003c\/strong\u003e: és el software\/llibreria que es fa servir per connectar a la base de dades. Normalment cada llenguatge de programació té un driver per cada base de dades.\u003c\/li\u003e\n\u003cli\u003e\u003cstrong\u003eConnexió\u003c\/strong\u003e: és l\u0026rsquo;estructura de dades que crea el client per gestionar la comunicació amb la base de dades. Normalment li pases adreça, user i pass i fas un connect i et retorna una connexió. A la connexió li passes les queries i al acabar s\u0026rsquo;ha de fer un close.\u003c\/li\u003e\n\u003cli\u003e\u003cstrong\u003eCursor\u003c\/strong\u003e: és l\u0026rsquo;estructura de dades que genera el client per recuperar els resultats d\u0026rsquo;una query.\u003c\/li\u003e\n\u003cli\u003e\u003cstrong\u003eTransacció\u003c\/strong\u003e: és la unitat de treball amb la base de dades.\u003c\/li\u003e\n\u003cli\u003e\u003cstrong\u003eORM\u003c\/strong\u003e (Object-Relational Mapper): llibreria que adapta les estructures d\u0026rsquo;una base de dades relacional per usar-les amb orientació a objectes.\u003c\/li\u003e\n\u003c\/ul\u003e\n\u003ch2 id=\u0022transaccions\u0022\u003eTransaccions\u003c\/h2\u003e\n\u003cp\u003eLes operacions sobre una base de dades SQL es fan sempre dins d\u0026rsquo;una \u003cstrong\u003etransacció\u003c\/strong\u003e.\nUna transacció s\u0026rsquo;inicia, fa una serie d\u0026rsquo;operacions de lectura i\/o escriptura i es tanca fent un \u003cstrong\u003ecommit\u003c\/strong\u003e.\nEn qualsevol punt es pot fer un \u003cstrong\u003erollback\u003c\/strong\u003e, desfent tots els canvis desde l\u0026rsquo;inici de la transacció.\u003c\/p\u003e
+        \u003cp\u003eIntroducció a alguns conceptes de bases de dades relacionals, de cara a aprendre a fer queries més eficients.\u003c\/p\u003e
 
 
       
@@ -209,7 +209,7 @@
 
     ,
         "url" : "https:\/\/garciamarquez.dev\/posts\/sql-talk\/",
-        "wordCount" : "2994",
+        "wordCount" : "3012",
         "genre" : [ ],
         "keywords" : [ 
       
@@ -350,7 +350,7 @@
               href="/posts/"
               
               title=""
-              >Posts</a
+              >Archive</a
             >
           </li>
         
@@ -410,9 +410,10 @@
     
     <div class="post__content">
       
-        <h1>Conceptes de SQL</h1>
+        <h1>Conceptes de SQL (Catalan)</h1>
       
-      <h2 id="definicions">Definicions</h2>
+      <p>Introducció a alguns conceptes de bases de dades relacionals, de cara a aprendre a fer queries més eficients.</p>
+<h2 id="definicions">Definicions</h2>
 <ul>
 <li><strong>Servidor</strong>: la base de dades.</li>
 <li><strong>Client</strong>: el teu programa.</li>
@@ -1450,8 +1451,7 @@ Index Cond: (t2.id = 125::oid)
 <p>Exercises:</p>
 <ul>
 <li><a href="https://pgexercises.com/">https://pgexercises.com/</a></li>
-</ul>
-</div>
+</ul></div>
     <div class="post__footer">
       
 

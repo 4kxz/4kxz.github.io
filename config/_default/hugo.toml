@@ -7,7 +7,6 @@ customCss = ["css/custom.css"]
 profilePicture = "images/profile.jpg"
 disableTitleCapitalization = true
 disableArchiveTitleStyling = true
-fullPostContent = true
 
 singleDateFormat = "2006-01-02"
 indexDateFormat = "2006-01-02"
@@ -22,7 +21,7 @@ listDateFormat = "2006-01-02"
   url = "/"
 
   [[menu.main]]
-  name = "Posts"
+  name = "Archive"
   weight = 200
   identifier = "posts"
   url = "/posts/"

@@ -6,6 +6,7 @@ tags = ["Python", "SQL"]
 +++
 I found Pandas' built-in `DataFrame.to_sql()` too slow for my use case, so here's a faster way to load a DataFrame to a PostgreSQL database using the `COPY` command. 
 
+<!--more-->
 
 ```python
 from io import StringIO

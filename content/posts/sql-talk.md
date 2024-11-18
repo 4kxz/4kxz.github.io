@@ -1,9 +1,13 @@
 +++
-title = 'Conceptes de SQL'
+title = 'Conceptes de SQL (Catalan)'
 date = 2021-03-16T13:14:09+02:00
 draft = false
 tags = ["SQL"]
 +++
+
+Introducció a alguns conceptes de bases de dades relacionals, de cara a aprendre a fer queries més eficients.
+
+<!--more-->
 
 ## Definicions
 
@@ -14,8 +18,6 @@ tags = ["SQL"]
 * **Cursor**: és l'estructura de dades que genera el client per recuperar els resultats d'una query.
 * **Transacció**: és la unitat de treball amb la base de dades.
 * **ORM** (Object-Relational Mapper): llibreria que adapta les estructures d'una base de dades relacional per usar-les amb orientació a objectes.
-
-
 
 ## Transaccions
 
