@@ -3,16 +3,25 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://garciamarquez.dev/</loc>
-    <lastmod>2024-11-18T11:50:05+02:00</lastmod>
+    <lastmod>2024-11-20T13:50:05+02:00</lastmod>
+  </url><url>
+    <loc>https://garciamarquez.dev/tags/gamedev/</loc>
+    <lastmod>2024-11-20T13:50:05+02:00</lastmod>
+  </url><url>
+    <loc>https://garciamarquez.dev/tags/godot/</loc>
+    <lastmod>2024-11-20T13:50:05+02:00</lastmod>
   </url><url>
     <loc>https://garciamarquez.dev/tags/index/</loc>
-    <lastmod>2024-11-18T11:50:05+02:00</lastmod>
+    <lastmod>2024-11-20T13:50:05+02:00</lastmod>
+  </url><url>
+    <loc>https://garciamarquez.dev/posts/godot-popular-assets/</loc>
+    <lastmod>2024-11-20T13:50:05+02:00</lastmod>
   </url><url>
     <loc>https://garciamarquez.dev/posts/</loc>
-    <lastmod>2024-11-18T11:50:05+02:00</lastmod>
+    <lastmod>2024-11-20T13:50:05+02:00</lastmod>
   </url><url>
     <loc>https://garciamarquez.dev/tags/</loc>
-    <lastmod>2024-11-18T11:50:05+02:00</lastmod>
+    <lastmod>2024-11-20T13:50:05+02:00</lastmod>
   </url><url>
     <loc>https://garciamarquez.dev/posts/dataframe-to-pg/</loc>
     <lastmod>2022-07-13T15:01:01+02:00</lastmod>

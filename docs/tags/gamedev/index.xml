@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>GameDev on Blog</title>
+    <link>https://garciamarquez.dev/tags/gamedev/</link>
+    <description>Recent content in GameDev on Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 20 Nov 2024 13:50:05 +0200</lastBuildDate><atom:link href="https://garciamarquez.dev/tags/gamedev/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Most Popular Godot 4 Addons (by Github stars)</title>
+      <link>https://garciamarquez.dev/posts/godot-popular-assets/</link>
+      <pubDate>Wed, 20 Nov 2024 13:50:05 +0200</pubDate>
+      
+      <guid>https://garciamarquez.dev/posts/godot-popular-assets/</guid>
+      
+        <description>&lt;p&gt;Since the asset library only sorts by date, I made a script to sort all the assets by GitHub stars to see which ones are the most popular.&lt;/p&gt;
+&lt;p&gt;I&amp;rsquo;ve put the full list in &lt;a href=&#34;https://docs.google.com/spreadsheets/d/13HBgtBQA-bFY6LULtjJ87fuNjOiZe3DFezWgQtl5RyI/edit?usp=sharing&#34;&gt;a spreadsheet&lt;/a&gt;, but here&amp;rsquo;s a quick overview of the top 10:&lt;/p&gt;</description>
+      
+    </item>
+    
+  </channel>
+</rss>

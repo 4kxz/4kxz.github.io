@@ -6,18 +6,48 @@
     <description>Recent content in React on Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 18 Nov 2024 11:50:05 +0200</lastBuildDate><atom:link href="http://localhost:1313/tags/react/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 20 Nov 2024 13:50:05 +0200</lastBuildDate><atom:link href="http://localhost:1313/tags/react/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>AI-Powered Movie Tier List</title>
-      <link>http://localhost:1313/posts/movie-recommendations/</link>
-      <pubDate>Mon, 18 Nov 2024 11:50:05 +0200</pubDate>
+      <title>Most Popular Godot 4 Addons (By GitHub Stars)</title>
+      <link>http://localhost:1313/posts/godot-popular-assets/</link>
+      <pubDate>Wed, 20 Nov 2024 13:50:05 +0200</pubDate>
       
-      <guid>http://localhost:1313/posts/movie-recommendations/</guid>
+      <guid>http://localhost:1313/posts/godot-popular-assets/</guid>
       
-        <description>&lt;p&gt;Over the weekend, I built a movie recommendation app with a twist: instead of the usual 5-star ratings, users organize movies into tier lists (S/A/B/C/D) through drag-and-drop. As you rank movies, the app learns your preferences and suggests new ones. I wanted to explore what it&amp;rsquo;s like to build a full-stack application with AI assistance, particularly using ChatGPT.&lt;/p&gt;
-&lt;h2 id=&#34;the-good-parts&#34;&gt;The Good Parts&lt;/h2&gt;
-&lt;p&gt;The AI assistant really shined when it came to bootstrapping the project. It quickly generated solid boilerplate code for both the React frontend and Python FastAPI backend. The initial TypeScript interfaces, basic API routes, and UI component structure were all created with minimal back-and-forth.
-The DND Kit integration for drag-and-drop functionality was particularly impressive. ChatGPT provided a working template that handled all the basic drag-and-drop operations, which I could then customize for my specific needs. It even included accessibility features like keyboard controls out of the box.&lt;/p&gt;</description>
+        <description>&lt;h1 id=&#34;most-popular-godot-4-addons-by-github-stars&#34;&gt;Most Popular Godot 4 Addons (By GitHub Stars)&lt;/h1&gt;
+&lt;p&gt;A comprehensive analysis of the most-starred Godot 4 addons on GitHub. All data is current as of November 2024.&lt;/p&gt;
+&lt;h2 id=&#34;top-10-most-popular-addons&#34;&gt;Top 10 Most Popular Addons&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;GodotSteam GDExtension&lt;/strong&gt; (2.9k ⭐)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Steam integration for Godot 4.3&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/GodotSteam/GodotSteam&#34;&gt;GitHub&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Phantom Camera&lt;/strong&gt; (2.3k ⭐)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Advanced camera system for Godot 4.2&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/ramokz/phantom-camera&#34;&gt;GitHub&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;ProtonScatter&lt;/strong&gt; (2.2k ⭐)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Procedural object placement tool&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/HungryProton/scatter&#34;&gt;GitHub&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Dialogue Manager&lt;/strong&gt; (2.2k ⭐)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Branching dialogue system&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/nathanhoad/godot_dialogue_manager&#34;&gt;GitHub&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Godot Jolt&lt;/strong&gt; (2.2k ⭐)&lt;/p&gt;</description>
       
     </item>
     
