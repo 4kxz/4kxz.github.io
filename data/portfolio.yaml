@@ -18,7 +18,7 @@ portfolioitems:
         end: '2024'
         authors: []
       - name: Pixel Art Search
-        image: '/images/tileset-search.png'
+        image: '/images/tileset-search/screenshot1.png'
         link: https://4kxz.itch.io/limezu-tileset-search
         description: |
           A search tool for pixel art tiles, allowing game developers to find and filter through a massive tileset collection. Users can search by keyword, filter by theme, preview tiles and animations and find tile coordinates.
