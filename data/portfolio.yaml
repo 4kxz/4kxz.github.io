@@ -1,5 +1,5 @@
 portfolioitems:
-  - title: Web Projects
+  - title: Web Side Projects
     portfolioitem:
       - name: Movie Recommender
         image: '/images/movie-recommender.png'
@@ -27,6 +27,19 @@ portfolioitems:
           - Python
           - JavaScript
         status: 'Finished'
-        # start: '2020'
         end: '2023'
+        authors: []
+  - title: Game Side Projects
+    portfolioitem:
+      - name: Winter Whirl
+        image: '/images/games/winter-whirl.png'
+        link: https://4kxz.itch.io/winter-whirl
+        description: |
+          A winter-themed platform game made in one day for the SpeedJam #8.
+          
+          Move your mouse in circles to move the ball and gain enough speed to jump over obstacles and collect candies.
+        tags:
+          - Godot
+        status: 'Finished'
+        end: '2024'
         authors: []
